@@ -689,6 +689,7 @@ textarea {
 /* Modal styles */
 /* Dialog (native HTML modal) */
 .help-dialog {
+    margin: auto;
     border: 1px solid #FFD700;
     border-radius: 8px;
     background: #1a1a1a;
