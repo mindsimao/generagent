@@ -377,9 +377,14 @@ class AgentGenerator {
                     nextContentIndex++;
                 }
                 
-                // If next content is another header or end of file, skip this section
+                // If next content is another header or end of file, skip this section and its blank lines
                 if (nextContentIndex >= lines.length || lines[nextContentIndex].startsWith('## ') || lines[nextContentIndex].startsWith('---')) {
+                    // Skip the header
                     i++;
+                    // Skip any blank lines after it
+                    while (i < lines.length && lines[i].trim() === '') {
+                        i++;
+                    }
                     continue;
                 }
             }
@@ -388,7 +393,23 @@ class AgentGenerator {
             i++;
         }
         
-        return result.join('\n');
+        // Remove excessive blank lines (more than 2 consecutive)
+        const cleaned = [];
+        let blankCount = 0;
+        
+        for (const line of result) {
+            if (line.trim() === '') {
+                blankCount++;
+                if (blankCount <= 2) {
+                    cleaned.push(line);
+                }
+            } else {
+                blankCount = 0;
+                cleaned.push(line);
+            }
+        }
+        
+        return cleaned.join('\n').trim();
     }
 
     buildTechStackSection(sections) {
