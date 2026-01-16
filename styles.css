@@ -699,6 +699,8 @@ textarea {
     max-height: 90vh;
     box-shadow: 0 10px 40px rgba(255, 215, 0, 0.3);
     color: #ffffff;
+    display: flex;
+    flex-direction: column;
 }
 
 .help-dialog::backdrop {
@@ -728,6 +730,7 @@ textarea {
     padding: 20px 30px;
     border-bottom: 2px solid rgba(255, 215, 0, 0.3);
     background: rgba(255, 215, 0, 0.05);
+    flex-shrink: 0;
 }
 
 .modal-header h2 {
@@ -736,22 +739,23 @@ textarea {
     margin: 0;
 }
 
-.modal-close {
+.close-modal {
     background: none;
     border: none;
     color: #FFD700;
-    font-size: 2rem;
+    font-size: 2.5rem;
     cursor: pointer;
     padding: 0;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: transform 0.2s, color 0.2s;
+    line-height: 1;
 }
 
-.modal-close:hover {
+.close-modal:hover {
     transform: scale(1.2);
     color: #FFA500;
 }
@@ -762,21 +766,7 @@ textarea {
     flex: 1;
 }
 
-.modal-body pre {
-    margin: 0;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
-    font-size: 13px;
-    line-height: 1.6;
-    color: #e0e0e0;
-}
-
-.help-modal-content {
-    max-width: 800px;
-}
-
-.close-modal {
+.help-section {
     margin-bottom: 30px;
 }
 
@@ -797,6 +787,26 @@ textarea {
     color: #ccc;
     line-height: 1.6;
     margin-bottom: 10px;
+}
+
+.help-section ul,
+.help-section ol {
+    color: #ccc;
+    line-height: 1.8;
+    padding-left: 20px;
+}
+
+.help-section li {
+    margin-bottom: 8px;
+}
+
+.help-section code {
+    background: rgba(255, 215, 0, 0.1);
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: #FFD700;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+    font-size: 0.9em;
 }
 
 .help-section ul,
