@@ -580,7 +580,7 @@ function renderReviewStep(step) {
                 Your AGENTS.md file is complete and ready to use!
             </p>
             <p style="color: var(--color-text-secondary);">
-                Click "Generate Files" to download your configuration.
+                Use the copy or download buttons in the preview panel.
             </p>
         </div>
     `;
@@ -643,7 +643,6 @@ function updateNavigationButtons(stepIndex) {
     const backBtn = document.getElementById('backBtn');
     const skipBtn = document.getElementById('skipBtn');
     const nextBtn = document.getElementById('nextBtn');
-    const finishBtn = document.getElementById('finishBtn');
     
     // Back button
     backBtn.style.display = stepIndex > 0 ? 'block' : 'none';
@@ -651,13 +650,11 @@ function updateNavigationButtons(stepIndex) {
     // Skip button (hide on welcome and review)
     skipBtn.style.display = (stepIndex > 0 && stepIndex < steps.length - 1) ? 'block' : 'none';
     
-    // Next/Finish buttons
+    // Hide navigation buttons on final step
     if (stepIndex === steps.length - 1) {
         nextBtn.style.display = 'none';
-        finishBtn.style.display = 'block';
     } else {
         nextBtn.style.display = 'block';
-        finishBtn.style.display = 'none';
         
         // Disable next if required step not valid
         const step = steps[stepIndex];
@@ -915,7 +912,6 @@ function setupEventListeners() {
     document.getElementById('nextBtn').addEventListener('click', nextStep);
     document.getElementById('backBtn').addEventListener('click', prevStep);
     document.getElementById('skipBtn').addEventListener('click', skipStep);
-    document.getElementById('finishBtn').addEventListener('click', downloadFile);
     document.getElementById('copyPreviewBtn').addEventListener('click', copyToClipboard);
     document.getElementById('downloadPreviewBtn').addEventListener('click', downloadFile);
     document.getElementById('resetBtn').addEventListener('click', resetWizard);

@@ -26,10 +26,6 @@
         <div class="content-wrapper">
             <!-- Form Steps Panel -->
             <div class="steps-panel">
-                <div id="stepContent">
-                    <!-- Steps will be rendered here dynamically -->
-                </div>
-
                 <!-- Navigation Buttons -->
                 <div class="step-navigation">
                     <button id="backBtn" class="btn btn-secondary" style="display: none;">
@@ -41,9 +37,11 @@
                     <button id="nextBtn" class="btn btn-primary">
                         Next →
                     </button>
-                    <button id="finishBtn" class="btn btn-success" style="display: none;">
-                        ✓ Generate Files
-                    </button>
+
+                </div>
+
+                <div id="stepContent">
+                    <!-- Steps will be rendered here dynamically -->
                 </div>
             </div>
 
@@ -52,8 +50,8 @@
                 <div class="preview-header">
                     <h3>Live Preview</h3>
                     <div class="preview-actions" style="display: none;" id="previewActions">
-                        <button class="btn btn-sm" id="copyPreviewBtn">📋 Copy</button>
-                        <button class="btn btn-sm" id="downloadPreviewBtn">⬇️ Download</button>
+                        <button class="btn btn-sm btn-copy" id="copyPreviewBtn">Copy</button>
+                        <button class="btn btn-sm btn-download" id="downloadPreviewBtn">Download</button>
                     </div>
                 </div>
                 <div class="preview-content" id="previewContent">
