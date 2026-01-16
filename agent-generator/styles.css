@@ -687,40 +687,25 @@ textarea {
 }
 
 /* Modal styles */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.85);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    padding: 20px;
-    animation: fadeIn 0.2s ease-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-.modal-content {
-    background: #1a1a1a;
+/* Dialog (native HTML modal) */
+.help-dialog {
     border: 1px solid #FFD700;
     border-radius: 8px;
-    max-width: 900px;
-    width: 100%;
+    background: #1a1a1a;
+    padding: 0;
+    max-width: 800px;
+    width: calc(100% - 40px);
     max-height: 90vh;
-    display: flex;
-    flex-direction: column;
     box-shadow: 0 10px 40px rgba(255, 215, 0, 0.3);
+    color: #ffffff;
+}
+
+.help-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(4px);
+}
+
+.help-dialog[open] {
     animation: slideIn 0.3s ease-out;
 }
 
@@ -771,10 +756,9 @@ textarea {
 }
 
 .modal-body {
-    flex: 1;
     overflow-y: auto;
     padding: 30px;
-    background: #0a0a0a;
+    flex: 1;
 }
 
 .modal-body pre {
@@ -791,7 +775,7 @@ textarea {
     max-width: 800px;
 }
 
-.help-section {
+.close-modal {
     margin-bottom: 30px;
 }
 
@@ -859,7 +843,7 @@ textarea {
     color: #FFA500;
 }
 
-.modal-footer {
+.help-section {
     display: flex;
     gap: 12px;
     justify-content: flex-end;

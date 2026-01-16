@@ -1451,25 +1451,26 @@ You design efficient database schemas, write optimized queries, and ensure data 
         });
 
         // Help modal
+        const helpDialog = document.getElementById('help-modal');
+        
         document.getElementById('help-btn').addEventListener('click', () => {
-            document.getElementById('help-modal').style.display = 'flex';
+            helpDialog.showModal();
         });
 
         document.getElementById('close-help-modal').addEventListener('click', () => {
-            document.getElementById('help-modal').style.display = 'none';
+            helpDialog.close();
         });
 
-        // Close modal when clicking outside
-        document.getElementById('help-modal').addEventListener('click', (e) => {
-            if (e.target.id === 'help-modal') {
-                document.getElementById('help-modal').style.display = 'none';
-            }
-        });
-
-        // Close modal on escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                document.getElementById('help-modal').style.display = 'none';
+        // Close modal when clicking backdrop
+        helpDialog.addEventListener('click', (e) => {
+            const rect = helpDialog.getBoundingClientRect();
+            if (
+                e.clientX < rect.left ||
+                e.clientX > rect.right ||
+                e.clientY < rect.top ||
+                e.clientY > rect.bottom
+            ) {
+                helpDialog.close();
             }
         });
     }

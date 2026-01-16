@@ -21,13 +21,12 @@
         </header>
 
         <!-- Help Modal -->
-        <div id="help-modal" class="modal">
-            <div class="modal-content help-modal-content">
-                <div class="modal-header">
-                    <h2>📖 How to Use This Generator</h2>
-                    <button class="close-modal" id="close-help-modal">&times;</button>
-                </div>
-                <div class="modal-body">
+        <dialog id="help-modal" class="help-dialog">
+            <div class="modal-header">
+                <h2>📖 How to Use This Generator</h2>
+                <button class="close-modal" id="close-help-modal">&times;</button>
+            </div>
+            <div class="modal-body">
                     <div class="help-section">
                         <h3>🎯 Purpose</h3>
                         <p>Generate custom <code>AGENTS.md</code> configuration files that guide AI coding assistants (like GitHub Copilot, Cursor, or Claude) on how to work with your specific project.</p>
@@ -75,8 +74,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
-        </div>
+        </dialog>
 
         <div class="layout">
             <div class="questionnaire">
