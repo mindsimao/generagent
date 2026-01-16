@@ -94,16 +94,17 @@ header p {
 }
 
 .section-content {
-    max-height: 2000px;
     overflow: hidden;
-    transition: max-height 0.3s ease-out, padding 0.3s;
+    transition: max-height 0.4s ease-out, opacity 0.3s, padding 0.3s;
     padding: 20px;
     background: white;
+    opacity: 1;
 }
 
 .section-content.collapsed {
-    max-height: 0;
-    padding: 0 20px;
+    max-height: 0 !important;
+    padding: 0 20px !important;
+    opacity: 0;
 }
 
 .section-content.active {

@@ -132,10 +132,14 @@ class AgentGenerator {
                 const isCollapsed = content.classList.contains('collapsed');
                 
                 if (isCollapsed) {
+                    // Expand
                     content.classList.remove('collapsed');
+                    content.classList.add('active');
                     header.classList.remove('collapsed');
                     header.querySelector('.collapse-icon').textContent = '−';
                 } else {
+                    // Collapse
+                    content.classList.remove('active');
                     content.classList.add('collapsed');
                     header.classList.add('collapsed');
                     header.querySelector('.collapse-icon').textContent = '+';
