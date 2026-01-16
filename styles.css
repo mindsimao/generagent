@@ -640,50 +640,63 @@ textarea {
     flex: 1;
 }
 
-.sub-agent-card .download-sub-agent {
-    padding: 10px 16px;
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-    color: #0a0a0a;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
 
-.sub-agent-card .download-sub-agent:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(255, 215, 0, 0.3);
-}
 
 .sub-agent-actions {
     display: flex;
-    gap: 10px;
+    gap: 6px;
     margin-top: auto;
 }
 
+.preview-sub-agent, .copy-sub-agent, .download-sub-agent {
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex: 1;
+    border: 1px solid transparent;
+}
+
 .preview-sub-agent {
-    padding: 10px 16px;
     background: #2a2a2a;
     color: #FFD700;
-    border: 1px solid #FFD700;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    flex: 1;
+    border-color: #3a3a3a;
 }
 
 .preview-sub-agent:hover {
     background: rgba(255, 215, 0, 0.1);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2);
+    border-color: #FFD700;
+    transform: translateY(-1px);
+}
+
+.copy-sub-agent {
+    background: #2a2a2a;
+    color: #FFD700;
+    border-color: #3a3a3a;
+}
+
+.copy-sub-agent:hover {
+    background: rgba(255, 215, 0, 0.1);
+    border-color: #FFD700;
+    transform: translateY(-1px);
+}
+
+.copy-sub-agent.copied {
+    background: rgba(0, 255, 0, 0.1);
+    color: #0f0;
+    border-color: #0f0;
 }
 
 .download-sub-agent {
-    flex: 1;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #0a0a0a;
+}
+
+.download-sub-agent:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(255, 215, 0, 0.3);
 }
 
 /* Modal styles */
@@ -724,6 +737,33 @@ textarea {
         transform: translateY(0);
         opacity: 1;
     }
+}
+
+/* Preview Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 20px;
+}
+
+.modal-content {
+    background: #1a1a1a;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 12px;
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .modal-header {
@@ -933,4 +973,149 @@ textarea {
 
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 215, 0, 0.5);
+}
+
+/* Dialog for subagent previews */
+.preview-dialog {
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 12px;
+    background: #1a1a1a;
+    max-width: 900px;
+    width: 90vw;
+    max-height: 90vh;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+}
+
+.preview-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.preview-dialog .dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+    background: rgba(255, 215, 0, 0.05);
+    flex-shrink: 0;
+}
+
+.preview-dialog .dialog-header h2 {
+    color: #FFD700;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.preview-dialog .dialog-close {
+    background: none;
+    border: none;
+    color: #FFD700;
+    font-size: 2.5rem;
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, color 0.2s;
+    line-height: 1;
+}
+
+.preview-dialog .dialog-close:hover {
+    transform: scale(1.2);
+    color: #FFA500;
+}
+
+.preview-dialog .dialog-body {
+    overflow-y: auto;
+    padding: 24px 30px;
+    flex: 1;
+    background: #0a0a0a;
+}
+
+.preview-dialog .dialog-body pre {
+    margin: 0;
+    background: #0a0a0a;
+    padding: 0;
+    border-radius: 0;
+}
+
+.preview-dialog .dialog-body code {
+    color: #ddd;
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    font-size: 0.9em;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.preview-dialog .dialog-footer {
+    padding: 14px 20px;
+    border-top: 2px solid rgba(255, 215, 0, 0.3);
+    background: rgba(255, 215, 0, 0.05);
+    display: flex;
+    gap: 6px;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+.preview-dialog .dialog-copy,
+.preview-dialog .dialog-download,
+.preview-dialog .dialog-close-btn {
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.preview-dialog .dialog-copy {
+    background: #2a2a2a;
+    color: #FFD700;
+    border-color: #3a3a3a;
+}
+
+.preview-dialog .dialog-copy:hover {
+    background: rgba(255, 215, 0, 0.1);
+    border-color: #FFD700;
+    transform: translateY(-1px);
+}
+
+.preview-dialog .dialog-copy.copied {
+    background: rgba(0, 255, 0, 0.1);
+    color: #0f0;
+    border-color: #0f0;
+}
+
+.preview-dialog .dialog-download {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #000;
+    border: none;
+}
+
+.preview-dialog .dialog-download:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+}
+
+.preview-dialog .dialog-close-btn {
+    background: transparent;
+    color: #FFD700;
+    border-color: rgba(255, 215, 0, 0.3);
+}
+
+.preview-dialog .dialog-close-btn:hover {
+    background: rgba(255, 215, 0, 0.1);
+    transform: translateY(-1px);
 }

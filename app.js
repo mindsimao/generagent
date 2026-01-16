@@ -2039,6 +2039,9 @@ The agent should pause and seek clarification when:
                     <button class="preview-sub-agent" data-agent="${agentType}">
                         👁️ Preview
                     </button>
+                    <button class="copy-sub-agent" data-agent="${agentType}">
+                        📋 Copy
+                    </button>
                     <button class="download-sub-agent" data-agent="${agentType}">
                         💾 Download
                     </button>
@@ -2047,6 +2050,10 @@ The agent should pause and seek clarification when:
             
             card.querySelector('.preview-sub-agent').addEventListener('click', () => {
                 this.previewSubAgent(agentType);
+            });
+            
+            card.querySelector('.copy-sub-agent').addEventListener('click', () => {
+                this.copySubAgent(agentType, card.querySelector('.copy-sub-agent'));
             });
             
             card.querySelector('.download-sub-agent').addEventListener('click', () => {
@@ -2063,55 +2070,54 @@ The agent should pause and seek clarification when:
 
         const content = this.generateSubAgentConfig(agentType);
         
-        // Create modal
-        const modal = document.createElement('div');
-        modal.className = 'modal';
-        modal.innerHTML = `
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>${agentConfig.name}</h2>
-                    <button class="modal-close">×</button>
-                </div>
-                <div class="modal-body">
-                    <pre><code>${this.escapeHtml(content)}</code></pre>
-                </div>
-                <div class="modal-footer">
-                    <button class="modal-download" data-agent="${agentType}">💾 Download</button>
-                    <button class="modal-close-btn">Close</button>
-                </div>
+        // Create dialog
+        const dialog = document.createElement('dialog');
+        dialog.className = 'preview-dialog';
+        dialog.innerHTML = `
+            <div class="dialog-header">
+                <h2>${agentConfig.name}</h2>
+                <button class="dialog-close" type="button">×</button>
+            </div>
+            <div class="dialog-body">
+                <pre><code>${this.escapeHtml(content)}</code></pre>
+            </div>
+            <div class="dialog-footer">
+                <button class="dialog-copy" data-agent="${agentType}" type="button">📋 Copy</button>
+                <button class="dialog-download" data-agent="${agentType}" type="button">💾 Download</button>
+                <button class="dialog-close-btn" type="button">Close</button>
             </div>
         `;
         
-        document.body.appendChild(modal);
+        document.body.appendChild(dialog);
         
         // Add event listeners
-        modal.querySelector('.modal-close').addEventListener('click', () => {
-            document.body.removeChild(modal);
+        dialog.querySelector('.dialog-close').addEventListener('click', () => {
+            dialog.close();
+            document.body.removeChild(dialog);
         });
         
-        modal.querySelector('.modal-close-btn').addEventListener('click', () => {
-            document.body.removeChild(modal);
+        dialog.querySelector('.dialog-close-btn').addEventListener('click', () => {
+            dialog.close();
+            document.body.removeChild(dialog);
         });
         
-        modal.querySelector('.modal-download').addEventListener('click', () => {
+        dialog.querySelector('.dialog-copy').addEventListener('click', () => {
+            this.copySubAgent(agentType, dialog.querySelector('.dialog-copy'));
+        });
+        
+        dialog.querySelector('.dialog-download').addEventListener('click', () => {
             this.downloadSubAgent(agentType);
         });
         
         // Close on background click
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                document.body.removeChild(modal);
+        dialog.addEventListener('click', (e) => {
+            if (e.target === dialog) {
+                dialog.close();
+                document.body.removeChild(dialog);
             }
         });
         
-        // Close on Escape key
-        const escapeHandler = (e) => {
-            if (e.key === 'Escape') {
-                document.body.removeChild(modal);
-                document.removeEventListener('keydown', escapeHandler);
-            }
-        };
-        document.addEventListener('keydown', escapeHandler);
+        dialog.showModal();
     }
 
     generateSubAgentConfig(agentType) {
@@ -2152,6 +2158,24 @@ The agent should pause and seek clarification when:
         const filename = `${agentConfig.filename || agentType + '-agent'}.md`;
         
         this.downloadFile(config, filename);
+    }
+
+    copySubAgent(agentType, button) {
+        const config = this.generateSubAgentConfig(agentType);
+        
+        navigator.clipboard.writeText(config).then(() => {
+            const originalText = button.innerHTML;
+            button.innerHTML = '✓ Copied!';
+            button.classList.add('copied');
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.classList.remove('copied');
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy:', err);
+            alert('Failed to copy to clipboard. Please try again.');
+        });
     }
 
     copyAllSubAgents() {
