@@ -58,17 +58,11 @@ class AgentGenerator {
 
 {{TECH_STACK}}
 
-## Best Practices
-
-When working on this project, adhere to the following principles:
-
 {{BEST_PRACTICES}}
 
 ## Code Style Guidelines
 
 {{STYLE_GUIDE}}
-
-## Testing Requirements
 
 {{TESTING}}
 
@@ -594,11 +588,13 @@ When working on this project:
     }
 
     buildBestPracticesSection(sections) {
-        if (this.state.practices.length === 0) return 'Follow standard industry best practices';
+        if (this.state.practices.length === 0) return '';
 
-        const lines = this.state.practices.map(practice => {
+        const lines = ['## Best Practices', '', 'When working on this project, adhere to the following principles:', ''];
+        
+        this.state.practices.forEach(practice => {
             const info = sections.bestPractices[practice] || { name: practice, description: '' };
-            return `- **${info.name}**: ${info.description}`;
+            lines.push(`- **${info.name}**: ${info.description}`);
         });
 
         return lines.join('\n');
@@ -627,10 +623,10 @@ When working on this project:
 
     buildTestingSection(sections) {
         if (this.state.testing.length === 0 && this.state.customTesting.length === 0) {
-            return 'Write tests as appropriate for the codebase';
+            return '';
         }
 
-        const lines = ['Use the following testing frameworks:'];
+        const lines = ['## Testing Requirements', '', 'Use the following testing frameworks:', ''];
         
         this.state.testing.forEach(test => {
             const info = sections.testing[test] || { name: test, description: '' };
