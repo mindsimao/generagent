@@ -11,6 +11,7 @@ class AgentGenerator {
             style: [],
             agents: [],
             versions: {}, // Store versions for each technology
+            descriptions: {}, // Store role descriptions for each technology
             customTech: [], // Store custom technologies
             customFrontend: [],
             customTesting: []
@@ -75,10 +76,19 @@ class AgentGenerator {
             });
         });
 
+        // Description inputs
+        document.querySelectorAll('.description-input').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const tech = e.target.dataset.tech;
+                this.state.descriptions[tech] = e.target.value;
+                this.updatePreview();
+            });
+        });
+
         // Custom tech buttons
-        this.setupCustomTechHandler('tech', 'custom-tech-name', 'custom-tech-version', 'add-custom-tech', 'custom-tech-list', 'customTech');
-        this.setupCustomTechHandler('frontend', 'custom-frontend-name', 'custom-frontend-version', 'add-custom-frontend', 'custom-frontend-list', 'customFrontend');
-        this.setupCustomTechHandler('testing', 'custom-testing-name', 'custom-testing-version', 'add-custom-testing', 'custom-testing-list', 'customTesting');
+        this.setupCustomTechHandler('tech', 'custom-tech-name', 'custom-tech-version', 'custom-tech-description', 'add-custom-tech', 'custom-tech-list', 'customTech');
+        this.setupCustomTechHandler('frontend', 'custom-frontend-name', 'custom-frontend-version', 'custom-frontend-description', 'add-custom-frontend', 'custom-frontend-list', 'customFrontend');
+        this.setupCustomTechHandler('testing', 'custom-testing-name', 'custom-testing-version', 'custom-testing-description', 'add-custom-testing', 'custom-testing-list', 'customTesting');
 
         // Download button
         document.getElementById('download-btn').addEventListener('click', () => {
@@ -86,32 +96,32 @@ class AgentGenerator {
         });
     }
 
-    setupCustomTechHandler(category, nameInputId, versionInputId, buttonId, listId, stateKey) {
+    setupCustomTechHandler(category, nameInputId, versionInputId, descriptionInputId, buttonId, listId, stateKey) {
         document.getElementById(buttonId).addEventListener('click', () => {
             const nameInput = document.getElementById(nameInputId);
             const versionInput = document.getElementById(versionInputId);
+            const descriptionInput = document.getElementById(descriptionInputId);
             const name = nameInput.value.trim();
             const version = versionInput.value.trim();
+            const description = descriptionInput.value.trim();
 
             if (name) {
-                this.state[stateKey].push({ name, version });
+                this.state[stateKey].push({ name, version, description });
                 nameInput.value = '';
                 versionInput.value = '';
+                descriptionInput.value = '';
                 this.renderCustomTechList(listId, stateKey);
                 this.updatePreview();
             }
         });
 
         // Allow Enter key to add
-        document.getElementById(nameInputId).addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                document.getElementById(buttonId).click();
-            }
-        });
-        document.getElementById(versionInputId).addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                document.getElementById(buttonId).click();
-            }
+        [nameInputId, versionInputId, descriptionInputId].forEach(inputId => {
+            document.getElementById(inputId).addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    document.getElementById(buttonId).click();
+                }
+            });
         });
     }
 
@@ -122,8 +132,10 @@ class AgentGenerator {
         this.state[stateKey].forEach((item, index) => {
             const tag = document.createElement('div');
             tag.className = 'custom-tech-tag';
+            const versionText = item.version ? ` ${item.version}` : '';
+            const descText = item.description ? ` - ${item.description}` : '';
             tag.innerHTML = `
-                <span>${item.name}${item.version ? ' ' + item.version : ''}</span>
+                <span>${item.name}${versionText}${descText}</span>
                 <button class="remove-btn" data-index="${index}">×</button>
             `;
             
@@ -189,7 +201,10 @@ class AgentGenerator {
             this.state.techStack.forEach(tech => {
                 const info = sections.techStack[tech] || { name: tech, description: '' };
                 const version = this.state.versions[tech] ? ` (${this.state.versions[tech]})` : '';
-                lines.push(`- **${info.name}${version}**: ${info.description}`);
+                const roleDesc = this.state.descriptions[tech] ? ` - ${this.state.descriptions[tech]}` : '';
+                const baseDesc = info.description || '';
+                const fullDesc = roleDesc ? `${roleDesc}. ${baseDesc}` : baseDesc;
+                lines.push(`- **${info.name}${version}**: ${fullDesc}`);
             });
         }
 
@@ -198,7 +213,8 @@ class AgentGenerator {
             if (lines.length === 0) lines.push('**Primary Languages/Frameworks:**');
             this.state.customTech.forEach(item => {
                 const version = item.version ? ` (${item.version})` : '';
-                lines.push(`- **${item.name}${version}**`);
+                const desc = item.description ? `: ${item.description}` : '';
+                lines.push(`- **${item.name}${version}**${desc}`);
             });
         }
 
@@ -207,7 +223,10 @@ class AgentGenerator {
             this.state.frontend.forEach(fw => {
                 const info = sections.frontend[fw] || { name: fw, description: '' };
                 const version = this.state.versions[fw] ? ` (${this.state.versions[fw]})` : '';
-                lines.push(`- **${info.name}${version}**: ${info.description}`);
+                const roleDesc = this.state.descriptions[fw] ? ` - ${this.state.descriptions[fw]}` : '';
+                const baseDesc = info.description || '';
+                const fullDesc = roleDesc ? `${roleDesc}. ${baseDesc}` : baseDesc;
+                lines.push(`- **${info.name}${version}**: ${fullDesc}`);
             });
         }
 
@@ -218,7 +237,8 @@ class AgentGenerator {
             }
             this.state.customFrontend.forEach(item => {
                 const version = item.version ? ` (${item.version})` : '';
-                lines.push(`- **${item.name}${version}**`);
+                const desc = item.description ? `: ${item.description}` : '';
+                lines.push(`- **${item.name}${version}**${desc}`);
             });
         }
 
@@ -257,13 +277,17 @@ class AgentGenerator {
         this.state.testing.forEach(test => {
             const info = sections.testing[test] || { name: test, description: '' };
             const version = this.state.versions[test] ? ` (${this.state.versions[test]})` : '';
-            lines.push(`- **${info.name}${version}**: ${info.description}`);
+            const roleDesc = this.state.descriptions[test] ? ` - ${this.state.descriptions[test]}` : '';
+            const baseDesc = info.description || '';
+            const fullDesc = roleDesc ? `${roleDesc}. ${baseDesc}` : baseDesc;
+            lines.push(`- **${info.name}${version}**: ${fullDesc}`);
         });
 
         // Add custom testing items
         this.state.customTesting.forEach(item => {
             const version = item.version ? ` (${item.version})` : '';
-            lines.push(`- **${item.name}${version}**`);
+            const desc = item.description ? `: ${item.description}` : '';
+            lines.push(`- **${item.name}${version}**${desc}`);
         });
 
         return lines.join('\n');
@@ -313,9 +337,14 @@ class AgentGenerator {
         const allTech = [
             ...this.state.techStack.map(t => {
                 const version = this.state.versions[t] ? ` ${this.state.versions[t]}` : '';
-                return t + version;
+                const desc = this.state.descriptions[t] ? ` (${this.state.descriptions[t]})` : '';
+                return t + version + desc;
             }),
-            ...this.state.customTech.map(t => t.version ? `${t.name} ${t.version}` : t.name)
+            ...this.state.customTech.map(t => {
+                const version = t.version ? ` ${t.version}` : '';
+                const desc = t.description ? ` (${t.description})` : '';
+                return `${t.name}${version}${desc}`;
+            })
         ];
         
         if (allTech.length > 0) {

@@ -15,33 +15,91 @@
 
         <div class="layout">
             <div class="questionnaire">
-                <h2>Project Setup</h2>
+                <h2>Project Configuration</h2>
                 
-                <div class="question-group">
-                    <label for="project-name">Project Name</label>
-                    <input type="text" id="project-name" placeholder="my-awesome-project" />
-                </div>
+                <!-- Basic Info Section -->
+                <div class="collapsible-section">
+                    <div class="section-header" data-section="basic-info">
+                        <span class="section-title">📋 Basic Information</span>
+                        <span class="collapse-icon">−</span>
+                    </div>
+                    <div class="section-content" id="basic-info">
+                        <div class="question-group">
+                            <label for="project-name">Project Name</label>
+                            <input type="text" id="project-name" placeholder="my-awesome-project" />
+                        </div>
 
-                <div class="question-group">
-                    <label for="project-description">Project Description</label>
-                    <textarea id="project-description" placeholder="A brief description of what your project does..."></textarea>
+                        <div class="question-group">
+                            <label for="project-description">Project Description</label>
+                            <textarea id="project-description" placeholder="A brief description of what your project does..."></textarea>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="question-group">
                     <label>Primary Tech Stack</label>
                     <div class="checkbox-group tech-stack-group">
-                        <label><input type="checkbox" name="tech" value="javascript" /> JavaScript/Node.js <input type="text" class="version-input" placeholder="v20.x" data-tech="javascript" /></label>
-                        <label><input type="checkbox" name="tech" value="typescript" /> TypeScript <input type="text" class="version-input" placeholder="v5.x" data-tech="typescript" /></label>
-                        <label><input type="checkbox" name="tech" value="python" /> Python <input type="text" class="version-input" placeholder="3.12" data-tech="python" /></label>
-                        <label><input type="checkbox" name="tech" value="java" /> Java <input type="text" class="version-input" placeholder="21" data-tech="java" /></label>
-                        <label><input type="checkbox" name="tech" value="go" /> Go <input type="text" class="version-input" placeholder="1.21" data-tech="go" /></label>
-                        <label><input type="checkbox" name="tech" value="rust" /> Rust <input type="text" class="version-input" placeholder="1.75" data-tech="rust" /></label>
-                        <label><input type="checkbox" name="tech" value="csharp" /> C#/.NET <input type="text" class="version-input" placeholder=".NET 8" data-tech="csharp" /></label>
-                        <label><input type="checkbox" name="tech" value="php" /> PHP <input type="text" class="version-input" placeholder="8.3" data-tech="php" /></label>
+                        <div class="tech-item">
+                            <label><input type="checkbox" name="tech" value="javascript" /> JavaScript/Node.js</label>
+                            <div class="tech-details">
+                                <input type="text" class="version-input" placeholder="Version (e.g., v20.x)" data-tech="javascript" />
+                                <input type="text" class="description-input" placeholder="Role in project (e.g., Backend API)" data-tech="javascript" />
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <label><input type="checkbox" name="tech" value="typescript" /> TypeScript</label>
+                            <div class="tech-details">
+                                <input type="text" class="version-input" placeholder="Version (e.g., v5.x)" data-tech="typescript" />
+                                <input type="text" class="description-input" placeholder="Role in project" data-tech="typescript" />
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <label><input type="checkbox" name="tech" value="python" /> Python</label>
+                            <div class="tech-details">
+                                <input type="text" class="version-input" placeholder="Version (e.g., 3.12)" data-tech="python" />
+                                <input type="text" class="description-input" placeholder="Role in project" data-tech="python" />
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <label><input type="checkbox" name="tech" value="java" /> Java</label>
+                            <div class="tech-details">
+                                <input type="text" class="version-input" placeholder="Version (e.g., 21)" data-tech="java" />
+                                <input type="text" class="description-input" placeholder="Role in project" data-tech="java" />
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <label><input type="checkbox" name="tech" value="go" /> Go</label>
+                            <div class="tech-details">
+                                <input type="text" class="version-input" placeholder="Version (e.g., 1.21)" data-tech="go" />
+                                <input type="text" class="description-input" placeholder="Role in project" data-tech="go" />
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <label><input type="checkbox" name="tech" value="rust" /> Rust</label>
+                            <div class="tech-details">
+                                <input type="text" class="version-input" placeholder="Version (e.g., 1.75)" data-tech="rust" />
+                                <input type="text" class="description-input" placeholder="Role in project" data-tech="rust" />
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <label><input type="checkbox" name="tech" value="csharp" /> C#/.NET</label>
+                            <div class="tech-details">
+                                <input type="text" class="version-input" placeholder="Version (e.g., .NET 8)" data-tech="csharp" />
+                                <input type="text" class="description-input" placeholder="Role in project" data-tech="csharp" />
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <label><input type="checkbox" name="tech" value="php" /> PHP</label>
+                            <div class="tech-details">
+                                <input type="text" class="version-input" placeholder="Version (e.g., 8.3)" data-tech="php" />
+                                <input type="text" class="description-input" placeholder="Role in project" data-tech="php" />
+                            </div>
+                        </div>
                     </div>
                     <div class="custom-tech-section">
                         <input type="text" id="custom-tech-name" placeholder="Other technology (e.g., Ruby, Kotlin)" />
                         <input type="text" id="custom-tech-version" placeholder="Version (e.g., 3.2)" />
+                        <input type="text" id="custom-tech-description" placeholder="Role in project" />
                         <button type="button" id="add-custom-tech" class="add-btn">+ Add</button>
                     </div>
                     <div id="custom-tech-list" class="custom-tech-list"></div>
@@ -50,15 +108,46 @@
                 <div class="question-group">
                     <label>Frontend Frameworks (if applicable)</label>
                     <div class="checkbox-group">
-                        <label><input type="checkbox" name="frontend" value="react" /> React <input type="text" class="version-input" placeholder="v18" data-tech="react" /></label>
-                        <label><input type="checkbox" name="frontend" value="vue" /> Vue.js <input type="text" class="version-input" placeholder="v3" data-tech="vue" /></label>
-                        <label><input type="checkbox" name="frontend" value="angular" /> Angular <input type="text" class="version-input" placeholder="v17" data-tech="angular" /></label>
-                        <label><input type="checkbox" name="frontend" value="svelte" /> Svelte <input type="text" class="version-input" placeholder="v4" data-tech="svelte" /></label>
-                        <label><input type="checkbox" name="frontend" value="vanilla" /> Vanilla JS <input type="text" class="version-input" placeholder="ES2023" data-tech="vanilla" /></label>
+                        <div class="tech-item">
+                            <label><input type="checkbox" name="frontend" value="react" /> React</label>
+                            <div class="tech-details">
+                                <input type="text" class="version-input" placeholder="Version (e.g., v18)" data-tech="react" />
+                                <input type="text" class="description-input" placeholder="Role in project" data-tech="react" />
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <label><input type="checkbox" name="frontend" value="vue" /> Vue.js</label>
+                            <div class="tech-details">
+                                <input type="text" class="version-input" placeholder="Version (e.g., v3)" data-tech="vue" />
+                                <input type="text" class="description-input" placeholder="Role in project" data-tech="vue" />
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <label><input type="checkbox" name="frontend" value="angular" /> Angular</label>
+                            <div class="tech-details">
+                                <input type="text" class="version-input" placeholder="Version (e.g., v17)" data-tech="angular" />
+                                <input type="text" class="description-input" placeholder="Role in project" data-tech="angular" />
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <label><input type="checkbox" name="frontend" value="svelte" /> Svelte</label>
+                            <div class="tech-details">
+                                <input type="text" class="version-input" placeholder="Version (e.g., v4)" data-tech="svelte" />
+                                <input type="text" class="description-input" placeholder="Role in project" data-tech="svelte" />
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <label><input type="checkbox" name="frontend" value="vanilla" /> Vanilla JS</label>
+                            <div class="tech-details">
+                                <input type="text" class="version-input" placeholder="Version (e.g., ES2023)" data-tech="vanilla" />
+                                <input type="text" class="description-input" placeholder="Role in project" data-tech="vanilla" />
+                            </div>
+                        </div>
                     </div>
                     <div class="custom-tech-section">
                         <input type="text" id="custom-frontend-name" placeholder="Other framework (e.g., Next.js, Nuxt)" />
                         <input type="text" id="custom-frontend-version" placeholder="Version" />
+                        <input type="text" id="custom-frontend-description" placeholder="Role in project" />
                         <button type="button" id="add-custom-frontend" class="add-btn">+ Add</button>
                     </div>
                     <div id="custom-frontend-list" class="custom-tech-list"></div>
@@ -67,17 +156,60 @@
                 <div class="question-group">
                     <label>Testing Frameworks</label>
                     <div class="checkbox-group">
-                        <label><input type="checkbox" name="testing" value="jest" /> Jest <input type="text" class="version-input" placeholder="v29" data-tech="jest" /></label>
-                        <label><input type="checkbox" name="testing" value="pytest" /> Pytest <input type="text" class="version-input" placeholder="v7" data-tech="pytest" /></label>
-                        <label><input type="checkbox" name="testing" value="mocha" /> Mocha <input type="text" class="version-input" placeholder="v10" data-tech="mocha" /></label>
-                        <label><input type="checkbox" name="testing" value="junit" /> JUnit <input type="text" class="version-input" placeholder="v5" data-tech="junit" /></label>
-                        <label><input type="checkbox" name="testing" value="vitest" /> Vitest <input type="text" class="version-input" placeholder="v1" data-tech="vitest" /></label>
-                        <label><input type="checkbox" name="testing" value="cypress" /> Cypress <input type="text" class="version-input" placeholder="v13" data-tech="cypress" /></label>
-                        <label><input type="checkbox" name="testing" value="playwright" /> Playwright <input type="text" class="version-input" placeholder="v1.40" data-tech="playwright" /></label>
+                        <div class="tech-item">
+                            <label><input type="checkbox" name="testing" value="jest" /> Jest</label>
+                            <div class="tech-details">
+                                <input type="text" class="version-input" placeholder="Version (e.g., v29)" data-tech="jest" />
+                                <input type="text" class="description-input" placeholder="Role in project" data-tech="jest" />
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <label><input type="checkbox" name="testing" value="pytest" /> Pytest</label>
+                            <div class="tech-details">
+                                <input type="text" class="version-input" placeholder="Version (e.g., v7)" data-tech="pytest" />
+                                <input type="text" class="description-input" placeholder="Role in project" data-tech="pytest" />
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <label><input type="checkbox" name="testing" value="mocha" /> Mocha</label>
+                            <div class="tech-details">
+                                <input type="text" class="version-input" placeholder="Version (e.g., v10)" data-tech="mocha" />
+                                <input type="text" class="description-input" placeholder="Role in project" data-tech="mocha" />
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <label><input type="checkbox" name="testing" value="junit" /> JUnit</label>
+                            <div class="tech-details">
+                                <input type="text" class="version-input" placeholder="Version (e.g., v5)" data-tech="junit" />
+                                <input type="text" class="description-input" placeholder="Role in project" data-tech="junit" />
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <label><input type="checkbox" name="testing" value="vitest" /> Vitest</label>
+                            <div class="tech-details">
+                                <input type="text" class="version-input" placeholder="Version (e.g., v1)" data-tech="vitest" />
+                                <input type="text" class="description-input" placeholder="Role in project" data-tech="vitest" />
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <label><input type="checkbox" name="testing" value="cypress" /> Cypress</label>
+                            <div class="tech-details">
+                                <input type="text" class="version-input" placeholder="Version (e.g., v13)" data-tech="cypress" />
+                                <input type="text" class="description-input" placeholder="Role in project" data-tech="cypress" />
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <label><input type="checkbox" name="testing" value="playwright" /> Playwright</label>
+                            <div class="tech-details">
+                                <input type="text" class="version-input" placeholder="Version (e.g., v1.40)" data-tech="playwright" />
+                                <input type="text" class="description-input" placeholder="Role in project" data-tech="playwright" />
+                            </div>
+                        </div>
                     </div>
                     <div class="custom-tech-section">
                         <input type="text" id="custom-testing-name" placeholder="Other testing tool" />
                         <input type="text" id="custom-testing-version" placeholder="Version" />
+                        <input type="text" id="custom-testing-description" placeholder="Role in project" />
                         <button type="button" id="add-custom-testing" class="add-btn">+ Add</button>
                     </div>
                     <div id="custom-testing-list" class="custom-tech-list"></div>
