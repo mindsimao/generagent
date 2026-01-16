@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.collapsible-section {
+    margin-bottom: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid red;
+}
+.section-header {
+    padding: 15px;
+    background: #667eea;
+    color: white;
+    cursor: pointer;
+}
+.section-content {
+    max-height: 2000px;
+    overflow: hidden;
+    padding: 20px;
+    background: lightblue;
+}
+.section-content.collapsed {
+    max-height: 0;
+    padding: 0 20px;
+}
+.section-content.active {
+    max-height: none;
+}
+</style>
+</head>
+<body>
+<h1>Structure Test</h1>
+
+<div class="collapsible-section">
+    <div class="section-header">Section 1</div>
+    <div class="section-content active">
+        <p>Content 1</p>
+    </div>
+</div>
+
+<div class="collapsible-section">
+    <div class="section-header">Section 2</div>
+    <div class="section-content active">
+        <p>Content 2</p>
+    </div>
+</div>
+
+<p style="color:red;">This should be OUTSIDE sections</p>
+
+</body>
+</html>

@@ -55,9 +55,11 @@ header p {
 
 .collapsible-section {
     margin-bottom: 15px;
-    background: #f8f9fa;
+    background: white;
     border-radius: 8px;
     overflow: hidden;
+    border: 2px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .section-header {
@@ -96,6 +98,7 @@ header p {
     overflow: hidden;
     transition: max-height 0.3s ease-out, padding 0.3s;
     padding: 20px;
+    background: white;
 }
 
 .section-content.collapsed {
