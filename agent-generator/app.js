@@ -1419,7 +1419,16 @@ You design efficient database schemas, write optimized queries, and ensure data 
         // Custom linter handler (no version field)
         this.setupCustomLinterHandler();
 
-        // Download button
+        // Copy and Download buttons for AGENTS.md preview
+        document.getElementById('copy-agents-btn').addEventListener('click', () => {
+            this.copyAgentsMdToClipboard();
+        });
+
+        document.getElementById('download-agents-btn').addEventListener('click', () => {
+            this.downloadAgentsMd();
+        });
+
+        // Download all button
         document.getElementById('download-btn').addEventListener('click', () => {
             this.downloadAllConfigurations();
         });
@@ -2060,6 +2069,31 @@ The agent should pause and seek clarification when:
         const filename = `${agentConfig.filename || agentType + '-agent'}.md`;
         
         this.downloadFile(config, filename);
+    }
+
+    copyAgentsMdToClipboard() {
+        const agentsMd = this.generateAgentsMd();
+        const button = document.getElementById('copy-agents-btn');
+        
+        navigator.clipboard.writeText(agentsMd).then(() => {
+            // Show success feedback
+            const originalText = button.innerHTML;
+            button.innerHTML = '✓ Copied!';
+            button.classList.add('copied');
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.classList.remove('copied');
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy:', err);
+            alert('Failed to copy to clipboard. Please try again.');
+        });
+    }
+
+    downloadAgentsMd() {
+        const agentsMd = this.generateAgentsMd();
+        this.downloadFile(agentsMd, 'AGENTS.md');
     }
 
     downloadAllConfigurations() {

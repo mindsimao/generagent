@@ -403,11 +403,65 @@ textarea {
     padding: 20px 30px;
     border-bottom: 2px solid rgba(255, 215, 0, 0.3);
     background: rgba(255, 215, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .preview-header h2 {
     color: #FFD700;
     font-size: 1.5rem;
+    margin: 0;
+}
+
+.preview-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.action-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.copy-btn {
+    background: #2a2a2a;
+    color: #FFD700;
+    border: 1px solid #FFD700;
+}
+
+.copy-btn:hover {
+    background: rgba(255, 215, 0, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2);
+}
+
+.copy-btn.copied {
+    background: #28a745;
+    color: white;
+    border-color: #28a745;
+}
+
+.preview-actions .download-btn {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #0a0a0a;
+    border: none;
+    padding: 8px 16px;
+    margin: 0;
+}
+
+.preview-actions .download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 215, 0, 0.3);
+}
     margin-bottom: 15px;
 }
 
