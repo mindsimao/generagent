@@ -1436,6 +1436,15 @@ You design efficient database schemas, write optimized queries, and ensure data 
             this.downloadAgentsMd();
         });
 
+        // Copy and Download All buttons for sub-agents
+        document.getElementById('copy-all-subagents-btn').addEventListener('click', () => {
+            this.copyAllSubAgents();
+        });
+
+        document.getElementById('download-all-subagents-btn').addEventListener('click', () => {
+            this.downloadAllSubAgents();
+        });
+
         // Download all button
         document.getElementById('download-btn').addEventListener('click', () => {
             this.downloadAllConfigurations();
@@ -1453,11 +1462,6 @@ You design efficient database schemas, write optimized queries, and ensure data 
             targetPreview === 'agents-md' ? 'block' : 'none';
         document.getElementById('sub-agents-preview').style.display = 
             targetPreview === 'sub-agents' ? 'grid' : 'none';
-
-        // Update copy/download buttons visibility
-        const isAgentsMd = targetPreview === 'agents-md';
-        document.getElementById('copy-agents-btn').style.display = isAgentsMd ? 'flex' : 'none';
-        document.getElementById('download-agents-btn').style.display = isAgentsMd ? 'flex' : 'none';
     }
 
     setupCollapsible() {
@@ -1983,7 +1987,15 @@ The agent should pause and seek clarification when:
         
         subAgentsTab.style.opacity = '1';
         subAgentsTab.style.pointerEvents = 'auto';
-        container.innerHTML = '';
+        
+        // Build the grid content
+        const gridContainer = document.getElementById('sub-agents-grid');
+        if (!gridContainer) {
+            console.error('sub-agents-grid not found');
+            return;
+        }
+        
+        gridContainer.innerHTML = '';
         
         this.state.agents.forEach(agentType => {
             const agentConfig = this.templates.agents[agentType];
@@ -2012,7 +2024,7 @@ The agent should pause and seek clarification when:
                 this.downloadSubAgent(agentType);
             });
             
-            container.appendChild(card);
+            gridContainer.appendChild(card);
         });
     }
 
@@ -2111,6 +2123,36 @@ The agent should pause and seek clarification when:
         const filename = `${agentConfig.filename || agentType + '-agent'}.md`;
         
         this.downloadFile(config, filename);
+    }
+
+    copyAllSubAgents() {
+        const allConfigs = this.state.agents.map(agentType => {
+            return this.generateSubAgentConfig(agentType);
+        }).join('\n\n---\n\n');
+        
+        const button = document.getElementById('copy-all-subagents-btn');
+        
+        navigator.clipboard.writeText(allConfigs).then(() => {
+            const originalText = button.innerHTML;
+            button.innerHTML = '✓ Copied!';
+            button.classList.add('copied');
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.classList.remove('copied');
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy:', err);
+            alert('Failed to copy to clipboard. Please try again.');
+        });
+    }
+
+    downloadAllSubAgents() {
+        this.state.agents.forEach((agentType, index) => {
+            setTimeout(() => {
+                this.downloadSubAgent(agentType);
+            }, index * 100);
+        });
     }
 
     copyAgentsMdToClipboard() {

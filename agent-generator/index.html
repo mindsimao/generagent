@@ -365,23 +365,31 @@
                             🤖 Sub-Agents <span class="badge" id="sub-agents-count">0</span>
                         </button>
                     </div>
-                    <div class="preview-actions">
-                        <button id="copy-agents-btn" class="action-btn copy-btn" title="Copy to clipboard">
+                </div>
+                <div class="preview-content" id="agents-md-preview">
+                    <div class="preview-actions-inline">
+                        <button id="copy-agents-btn" class="action-btn-inline copy-btn-inline" title="Copy to clipboard">
                             📋 Copy
                         </button>
-                        <button id="download-agents-btn" class="action-btn download-btn" title="Download AGENTS.md">
+                        <button id="download-agents-btn" class="action-btn-inline download-btn-inline" title="Download AGENTS.md">
                             💾 Download
                         </button>
                     </div>
-                </div>
-                <div class="preview-content" id="agents-md-preview">
                     <pre id="preview-output"><code>Fill out the questionnaire to see your configuration...</code></pre>
                 </div>
                 <div class="preview-content sub-agents-container" id="sub-agents-preview" style="display: none;">
-                    <div class="sub-agents-empty">
-                        <p>No sub-agents selected yet.</p>
-                        <p>Select specialized agents from the form to see them here.</p>
+                    <div class="sub-agents-actions-bar">
+                        <h3>Selected Sub-Agents</h3>
+                        <div class="preview-actions-inline">
+                            <button id="copy-all-subagents-btn" class="action-btn-inline copy-btn-inline" title="Copy all sub-agents">
+                                📋 Copy All
+                            </button>
+                            <button id="download-all-subagents-btn" class="action-btn-inline download-btn-inline" title="Download all sub-agents">
+                                💾 Download All
+                            </button>
+                        </div>
                     </div>
+                    <div id="sub-agents-grid" class="sub-agents-grid"></div>
                 </div>
             </div>
         </div>
