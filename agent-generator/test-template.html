@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head><title>Test</title></head>
+<body>
+<textarea id="test" rows="5"></textarea>
+<pre id="output"></pre>
+<script>
+const textarea = document.getElementById('test');
+const output = document.getElementById('output');
+textarea.value = "/src - Main code\n/tests - Tests\n/docs - Documentation";
+
+textarea.addEventListener('input', () => {
+    output.textContent = 'Value: [' + textarea.value + ']';
+});
+
+// Trigger initial
+output.textContent = 'Value: [' + textarea.value + ']';
+</script>
+</body>
+</html>

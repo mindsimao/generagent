@@ -329,7 +329,9 @@ class AgentGenerator {
             : '';
         
         // Format new sections
-        const projectStructure = this.state.projectStructure || 'Standard project structure';
+        const projectStructure = this.state.projectStructure 
+            ? this.state.projectStructure.trim() 
+            : 'Standard project structure';
         const keyCommands = this.state.enabledSections['workflows'] 
             ? (this.state.keyCommands || 'No specific commands defined')
             : '';
@@ -378,7 +380,13 @@ class AgentGenerator {
                 }
                 
                 // If next content is another header or end of file, skip this section and its blank lines
-                if (nextContentIndex >= lines.length || lines[nextContentIndex].startsWith('## ') || lines[nextContentIndex].startsWith('---')) {
+                // But keep "Project Structure" section even if it only has default text
+                const sectionName = line.substring(3).trim();
+                const hasContent = nextContentIndex < lines.length && 
+                                   !lines[nextContentIndex].startsWith('## ') && 
+                                   !lines[nextContentIndex].startsWith('---');
+                
+                if (!hasContent && sectionName !== 'Project Structure') {
                     // Skip the header
                     i++;
                     // Skip any blank lines after it
