@@ -19,7 +19,14 @@ class AgentGenerator {
             customTech: [], // Store custom technologies
             customFrontend: [],
             customTesting: [],
-            customLinters: []
+            customLinters: [],
+            enabledSections: {
+                'tech-stack': true,
+                'testing': true,
+                'best-practices': true,
+                'code-style': true,
+                'workflows': true
+            }
         };
         
         this.templates = {};
@@ -85,8 +92,8 @@ class AgentGenerator {
             this.updatePreview();
         });
 
-        // Checkboxes
-        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        // Checkboxes (exclude section toggles)
+        document.querySelectorAll('input[type="checkbox"]:not(.section-toggle)').forEach(checkbox => {
             checkbox.addEventListener('change', () => {
                 this.updateState();
                 this.updatePreview();
