@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGENTS.md Wizard - Step-by-Step Generator</title>
+    <link rel="stylesheet" href="wizard-styles.css">
+</head>
+<body>
+    <div class="wizard-container">
+        <!-- Progress Bar -->
+        <div class="progress-section">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">Step 1 of 9</div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="content-wrapper">
+            <!-- Form Steps Panel -->
+            <div class="steps-panel">
+                <div id="stepContent">
+                    <!-- Steps will be rendered here dynamically -->
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="step-navigation">
+                    <button id="backBtn" class="btn btn-secondary" style="display: none;">
+                        ← Back
+                    </button>
+                    <button id="skipBtn" class="btn btn-ghost">
+                        Skip
+                    </button>
+                    <button id="nextBtn" class="btn btn-primary">
+                        Next →
+                    </button>
+                    <button id="finishBtn" class="btn btn-success" style="display: none;">
+                        ✓ Generate Files
+                    </button>
+                </div>
+            </div>
+
+            <!-- Preview Panel -->
+            <div class="preview-panel">
+                <div class="preview-header">
+                    <h3>Live Preview</h3>
+                    <div class="preview-actions" style="display: none;" id="previewActions">
+                        <button class="btn btn-sm" id="copyPreviewBtn">📋 Copy</button>
+                        <button class="btn btn-sm" id="downloadPreviewBtn">⬇️ Download</button>
+                    </div>
+                </div>
+                <div class="preview-content" id="previewContent">
+                    <div class="preview-placeholder">
+                        <p>Your AGENTS.md file will appear here as you progress through the steps.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="wizard-app.js"></script>
+</body>
+</html>
