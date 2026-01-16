@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Configuration Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 Agent Configuration Generator</h1>
+            <p>Answer a few questions to generate custom agent configurations for your project</p>
+        </header>
+
+        <div class="layout">
+            <div class="questionnaire">
+                <h2>Project Setup</h2>
+                
+                <div class="question-group">
+                    <label for="project-name">Project Name</label>
+                    <input type="text" id="project-name" placeholder="my-awesome-project" />
+                </div>
+
+                <div class="question-group">
+                    <label for="project-description">Project Description</label>
+                    <textarea id="project-description" placeholder="A brief description of what your project does..."></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label>Primary Tech Stack</label>
+                    <div class="checkbox-group tech-stack-group">
+                        <label><input type="checkbox" name="tech" value="javascript" /> JavaScript/Node.js <input type="text" class="version-input" placeholder="v20.x" data-tech="javascript" /></label>
+                        <label><input type="checkbox" name="tech" value="typescript" /> TypeScript <input type="text" class="version-input" placeholder="v5.x" data-tech="typescript" /></label>
+                        <label><input type="checkbox" name="tech" value="python" /> Python <input type="text" class="version-input" placeholder="3.12" data-tech="python" /></label>
+                        <label><input type="checkbox" name="tech" value="java" /> Java <input type="text" class="version-input" placeholder="21" data-tech="java" /></label>
+                        <label><input type="checkbox" name="tech" value="go" /> Go <input type="text" class="version-input" placeholder="1.21" data-tech="go" /></label>
+                        <label><input type="checkbox" name="tech" value="rust" /> Rust <input type="text" class="version-input" placeholder="1.75" data-tech="rust" /></label>
+                        <label><input type="checkbox" name="tech" value="csharp" /> C#/.NET <input type="text" class="version-input" placeholder=".NET 8" data-tech="csharp" /></label>
+                        <label><input type="checkbox" name="tech" value="php" /> PHP <input type="text" class="version-input" placeholder="8.3" data-tech="php" /></label>
+                    </div>
+                    <div class="custom-tech-section">
+                        <input type="text" id="custom-tech-name" placeholder="Other technology (e.g., Ruby, Kotlin)" />
+                        <input type="text" id="custom-tech-version" placeholder="Version (e.g., 3.2)" />
+                        <button type="button" id="add-custom-tech" class="add-btn">+ Add</button>
+                    </div>
+                    <div id="custom-tech-list" class="custom-tech-list"></div>
+                </div>
+
+                <div class="question-group">
+                    <label>Frontend Frameworks (if applicable)</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="frontend" value="react" /> React <input type="text" class="version-input" placeholder="v18" data-tech="react" /></label>
+                        <label><input type="checkbox" name="frontend" value="vue" /> Vue.js <input type="text" class="version-input" placeholder="v3" data-tech="vue" /></label>
+                        <label><input type="checkbox" name="frontend" value="angular" /> Angular <input type="text" class="version-input" placeholder="v17" data-tech="angular" /></label>
+                        <label><input type="checkbox" name="frontend" value="svelte" /> Svelte <input type="text" class="version-input" placeholder="v4" data-tech="svelte" /></label>
+                        <label><input type="checkbox" name="frontend" value="vanilla" /> Vanilla JS <input type="text" class="version-input" placeholder="ES2023" data-tech="vanilla" /></label>
+                    </div>
+                    <div class="custom-tech-section">
+                        <input type="text" id="custom-frontend-name" placeholder="Other framework (e.g., Next.js, Nuxt)" />
+                        <input type="text" id="custom-frontend-version" placeholder="Version" />
+                        <button type="button" id="add-custom-frontend" class="add-btn">+ Add</button>
+                    </div>
+                    <div id="custom-frontend-list" class="custom-tech-list"></div>
+                </div>
+
+                <div class="question-group">
+                    <label>Testing Frameworks</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="testing" value="jest" /> Jest <input type="text" class="version-input" placeholder="v29" data-tech="jest" /></label>
+                        <label><input type="checkbox" name="testing" value="pytest" /> Pytest <input type="text" class="version-input" placeholder="v7" data-tech="pytest" /></label>
+                        <label><input type="checkbox" name="testing" value="mocha" /> Mocha <input type="text" class="version-input" placeholder="v10" data-tech="mocha" /></label>
+                        <label><input type="checkbox" name="testing" value="junit" /> JUnit <input type="text" class="version-input" placeholder="v5" data-tech="junit" /></label>
+                        <label><input type="checkbox" name="testing" value="vitest" /> Vitest <input type="text" class="version-input" placeholder="v1" data-tech="vitest" /></label>
+                        <label><input type="checkbox" name="testing" value="cypress" /> Cypress <input type="text" class="version-input" placeholder="v13" data-tech="cypress" /></label>
+                        <label><input type="checkbox" name="testing" value="playwright" /> Playwright <input type="text" class="version-input" placeholder="v1.40" data-tech="playwright" /></label>
+                    </div>
+                    <div class="custom-tech-section">
+                        <input type="text" id="custom-testing-name" placeholder="Other testing tool" />
+                        <input type="text" id="custom-testing-version" placeholder="Version" />
+                        <button type="button" id="add-custom-testing" class="add-btn">+ Add</button>
+                    </div>
+                    <div id="custom-testing-list" class="custom-tech-list"></div>
+                </div>
+
+                <div class="question-group">
+                    <label>Best Practices & Guidelines</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="practices" value="tdd" /> Test-Driven Development</label>
+                        <label><input type="checkbox" name="practices" value="solid" /> SOLID Principles</label>
+                        <label><input type="checkbox" name="practices" value="clean-code" /> Clean Code</label>
+                        <label><input type="checkbox" name="practices" value="dry" /> DRY (Don't Repeat Yourself)</label>
+                        <label><input type="checkbox" name="practices" value="security" /> Security-First</label>
+                        <label><input type="checkbox" name="practices" value="performance" /> Performance Optimization</label>
+                        <label><input type="checkbox" name="practices" value="accessibility" /> Accessibility (a11y)</label>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <label>Code Style Preferences</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="style" value="eslint" /> ESLint</label>
+                        <label><input type="checkbox" name="style" value="prettier" /> Prettier</label>
+                        <label><input type="checkbox" name="style" value="black" /> Black (Python)</label>
+                        <label><input type="checkbox" name="style" value="pylint" /> Pylint</label>
+                        <label><input type="checkbox" name="style" value="pep8" /> PEP 8</label>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <label>Additional Agents Needed</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="agents" value="documentation" /> Documentation Expert</label>
+                        <label><input type="checkbox" name="agents" value="refactoring" /> Code Refactoring</label>
+                        <label><input type="checkbox" name="agents" value="testing" /> Testing Specialist</label>
+                        <label><input type="checkbox" name="agents" value="security" /> Security Auditor</label>
+                        <label><input type="checkbox" name="agents" value="performance" /> Performance Optimizer</label>
+                        <label><input type="checkbox" name="agents" value="api" /> API Developer</label>
+                        <label><input type="checkbox" name="agents" value="database" /> Database Expert</label>
+                    </div>
+                </div>
+
+                <button id="download-btn" class="download-btn">📥 Download All Configurations</button>
+            </div>
+
+            <div class="preview">
+                <div class="preview-header">
+                    <h2>Live Preview</h2>
+                    <div class="tabs">
+                        <button class="tab active" data-tab="agents-md">AGENTS.md</button>
+                    </div>
+                </div>
+                <div class="preview-content">
+                    <pre id="preview-output"><code>Fill out the questionnaire to see your configuration...</code></pre>
+                </div>
+                <div id="sub-agents-preview" class="sub-agents-preview"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
