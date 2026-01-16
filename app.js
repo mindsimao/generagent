@@ -1988,7 +1988,6 @@ The agent should pause and seek clarification when:
     }
 
     renderSubAgents() {
-        const container = document.getElementById('sub-agents-preview');
         const countBadge = document.getElementById('sub-agents-count');
         const count = this.state.agents.length;
         
@@ -1997,23 +1996,29 @@ The agent should pause and seek clarification when:
         
         // Update tab visibility
         const subAgentsTab = document.getElementById('sub-agents-tab');
+        const gridContainer = document.getElementById('sub-agents-grid');
+        const actionsBar = document.querySelector('.sub-agents-actions-bar');
+        
         if (count === 0) {
             subAgentsTab.style.opacity = '0.5';
             subAgentsTab.style.pointerEvents = 'none';
-            container.innerHTML = `
-                <div class="sub-agents-empty">
-                    <p>No sub-agents selected yet.</p>
-                    <p>Select specialized agents from the form to see them here.</p>
-                </div>
-            `;
+            if (actionsBar) actionsBar.style.display = 'none';
+            if (gridContainer) {
+                gridContainer.innerHTML = `
+                    <div class="sub-agents-empty">
+                        <p>No sub-agents selected yet.</p>
+                        <p>Select specialized agents from the form to see them here.</p>
+                    </div>
+                `;
+            }
             return;
         }
         
         subAgentsTab.style.opacity = '1';
         subAgentsTab.style.pointerEvents = 'auto';
+        if (actionsBar) actionsBar.style.display = 'flex';
         
         // Build the grid content
-        const gridContainer = document.getElementById('sub-agents-grid');
         if (!gridContainer) {
             console.error('sub-agents-grid not found');
             return;
