@@ -127,8 +127,20 @@ class AgentGenerator {
 
     setupCollapsible() {
         document.querySelectorAll('.section-header').forEach(header => {
-            header.addEventListener('click', () => {
+            header.addEventListener('click', (e) => {
+                // Don't collapse/expand if clicking the checkbox
+                if (e.target.classList.contains('section-toggle')) {
+                    return;
+                }
+                
                 const content = header.nextElementSibling;
+                const section = header.closest('.collapsible-section');
+                
+                // Don't allow collapse/expand if section is disabled
+                if (section.classList.contains('disabled')) {
+                    return;
+                }
+                
                 const isCollapsed = content.classList.contains('collapsed');
                 
                 if (isCollapsed) {
@@ -144,6 +156,27 @@ class AgentGenerator {
                     header.classList.add('collapsed');
                     header.querySelector('.collapse-icon').textContent = '+';
                 }
+            });
+        });
+        
+        // Setup section toggle checkboxes
+        document.querySelectorAll('.section-toggle').forEach(toggle => {
+            toggle.addEventListener('change', (e) => {
+                e.stopPropagation(); // Prevent triggering collapse/expand
+                const sectionId = toggle.id.replace('toggle-', '');
+                const section = toggle.closest('.collapsible-section');
+                
+                if (toggle.checked) {
+                    // Enable section
+                    section.classList.remove('disabled');
+                    this.state.enabledSections[sectionId] = true;
+                } else {
+                    // Disable section
+                    section.classList.add('disabled');
+                    this.state.enabledSections[sectionId] = false;
+                }
+                
+                this.updatePreview();
             });
         });
     }
@@ -275,16 +308,30 @@ class AgentGenerator {
         const sections = this.templates.sections;
 
         // Build sections
-        const techStackSection = this.buildTechStackSection(sections);
-        const bestPracticesSection = this.buildBestPracticesSection(sections);
-        const styleGuideSection = this.buildStyleGuideSection(sections);
-        const testingSection = this.buildTestingSection(sections);
+        const techStackSection = this.state.enabledSections['tech-stack'] 
+            ? this.buildTechStackSection(sections) 
+            : '';
+        const bestPracticesSection = this.state.enabledSections['best-practices'] 
+            ? this.buildBestPracticesSection(sections) 
+            : '';
+        const styleGuideSection = this.state.enabledSections['code-style'] 
+            ? this.buildStyleGuideSection(sections) 
+            : '';
+        const testingSection = this.state.enabledSections['testing'] 
+            ? this.buildTestingSection(sections) 
+            : '';
         
         // Format new sections
         const projectStructure = this.state.projectStructure || 'Standard project structure';
-        const keyCommands = this.state.keyCommands || 'No specific commands defined';
-        const workflows = this.state.workflows || 'Follow standard development workflows';
-        const stopConditions = this.state.stopConditions || 'Use judgment to determine when clarification is needed';
+        const keyCommands = this.state.enabledSections['workflows'] 
+            ? (this.state.keyCommands || 'No specific commands defined')
+            : '';
+        const workflows = this.state.enabledSections['workflows']
+            ? (this.state.workflows || 'Follow standard development workflows')
+            : '';
+        const stopConditions = this.state.enabledSections['workflows']
+            ? (this.state.stopConditions || 'Use judgment to determine when clarification is needed')
+            : '';
 
         // Replace placeholders
         let output = template
@@ -300,7 +347,41 @@ class AgentGenerator {
             .replace('{{STOP_CONDITIONS}}', stopConditions)
             .replace('{{CURRENT_DATE}}', new Date().toISOString().split('T')[0]);
 
+        // Remove empty sections from output
+        output = this.cleanEmptySections(output);
+
         return output;
+    }
+
+    cleanEmptySections(text) {
+        // Remove sections that are empty or only have the heading
+        const lines = text.split('\n');
+        const result = [];
+        let i = 0;
+        
+        while (i < lines.length) {
+            const line = lines[i];
+            
+            // Check if this is a section header (## heading)
+            if (line.startsWith('## ') && i < lines.length - 1) {
+                // Look ahead to see if the next non-empty line is another header or if section is empty
+                let nextContentIndex = i + 1;
+                while (nextContentIndex < lines.length && lines[nextContentIndex].trim() === '') {
+                    nextContentIndex++;
+                }
+                
+                // If next content is another header or end of file, skip this section
+                if (nextContentIndex >= lines.length || lines[nextContentIndex].startsWith('## ') || lines[nextContentIndex].startsWith('---')) {
+                    i++;
+                    continue;
+                }
+            }
+            
+            result.push(line);
+            i++;
+        }
+        
+        return result.join('\n');
     }
 
     buildTechStackSection(sections) {
