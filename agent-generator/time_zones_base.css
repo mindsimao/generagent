@@ -1,0 +1,491 @@
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #FFD700;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #888;
+            margin-top: 0.5rem;
+        }
+
+        .reference-time {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .reference-time h2 {
+            font-size: 1.2rem;
+            color: #FFD700;
+            margin-bottom: 0.5rem;
+        }
+
+        .reference-time .time {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .timezone-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .timezone-card {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .timezone-card:hover {
+            border-color: #FFD700;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);
+        }
+
+        .timezone-card.office {
+            border-color: rgba(255, 215, 0, 0.3);
+            background: #1f1f1f;
+        }
+
+        .office-country-card {
+            background: #1f1f1f;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .office-country-card.nearest {
+            border-color: #FFD700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            position: relative;
+        }
+
+        .office-country-card.nearest::before {
+            content: 'Nearest Office';
+            position: absolute;
+            top: -12px;
+            right: 1rem;
+            background: #FFD700;
+            color: #0a0a0a;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .remote-country-card {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .remote-country-card:hover {
+            border-color: #FFD700;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.1);
+        }
+
+        .country-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #FFD700;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .office-country-card .country-name {
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .office-time-display {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            font-variant-numeric: tabular-nums;
+            margin: 1rem 0;
+        }
+
+        .office-date-display {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .office-cities {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 0.75rem;
+        }
+
+        .city-row {
+            display: flex;
+            flex-direction: column;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .city-row:last-child {
+            border-bottom: none;
+        }
+
+        .city-name {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 0.25rem;
+        }
+
+        .city-time-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .city-time {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffffff;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .timezone-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #FFD700;
+            margin-bottom: 0.5rem;
+        }
+
+        .timezone-location {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 1rem;
+        }
+
+        .timezone-time {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .timezone-date {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .offset {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(255, 215, 0, 0.15);
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #FFD700;
+        }
+
+        .time-indicator {
+            display: inline-block;
+            margin-left: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .time-indicator.work-hours {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .time-indicator.off-hours {
+            background: rgba(234, 179, 8, 0.15);
+            color: #eab308;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+        }
+
+        .time-indicator.night {
+            background: rgba(147, 51, 234, 0.15);
+            color: #9333ea;
+            border: 1px solid rgba(147, 51, 234, 0.3);
+        }
+
+        .time-indicator.weekend {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .btn:focus,
+        .time-input:focus,
+        .office-select:focus,
+        .toggle-info:focus {
+            outline: 2px solid #FFD700;
+            outline-offset: 2px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #FFD700;
+            margin: 2rem 0 1.5rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .section-title a {
+            color: #FFD700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+            padding-bottom: 2px;
+        }
+
+        .section-title a:hover {
+            color: #FFA500;
+            border-bottom-color: #FFA500;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #2a2a2a;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .error {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            color: #ff6b6b;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 6px;
+            color: #FFD700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-family: inherit;
+        }
+
+        .btn:hover {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #FFD700;
+            transform: translateY(-1px);
+        }
+
+        .time-picker-container {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .time-input {
+            padding: 0.5rem 0.75rem;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 0.9rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .time-input:focus {
+            outline: none;
+            border-color: #FFD700;
+            background: #1f1f1f;
+        }
+
+        .time-input::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+
+        .office-select {
+            padding: 0.5rem 0.75rem;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            color: #FFD700;
+            font-size: 0.9rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .office-select:focus {
+            outline: none;
+            border-color: #FFD700;
+            background: #1f1f1f;
+        }
+
+        .office-select option {
+            background: #1a1a1a;
+            color: #ffffff;
+        }
+
+        .btn-apply {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #FFD700;
+        }
+
+        .btn-apply:hover {
+            background: #FFD700;
+            color: #0a0a0a;
+        }
+
+        .info-box {
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-box h3 {
+            color: #FFD700;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-box li {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .info-box li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #FFD700;
+        }
+
+        .info-box code {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #FFD700;
+        }
+
+        .toggle-info {
+            background: transparent;
+            border: none;
+            color: #888;
+            font-size: 0.85rem;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-info:hover {
+            color: #FFD700;
+        }
+
+        .info-content {
+            display: none;
+        }
+
+        .info-content.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .timezone-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .reference-time .time {
+                font-size: 1.5rem;
+            }
+        }
