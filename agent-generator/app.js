@@ -530,7 +530,7 @@ class AgentGenerator {
             return;
         }
 
-        container.innerHTML = '<h3 style="margin-bottom: 15px; color: #333;">Suggested Sub-Agents</h3>';
+        container.innerHTML = '<h3 style="margin-bottom: 15px; color: #FFD700;">Suggested Sub-Agents</h3>';
         
         this.state.agents.forEach(agentType => {
             const agentConfig = this.templates.agents[agentType];
@@ -541,10 +541,19 @@ class AgentGenerator {
             card.innerHTML = `
                 <h3>${agentConfig.name}</h3>
                 <p>${agentConfig.description}</p>
-                <button class="download-sub-agent" data-agent="${agentType}">
-                    Download ${agentConfig.name} Config
-                </button>
+                <div class="sub-agent-actions">
+                    <button class="preview-sub-agent" data-agent="${agentType}">
+                        👁️ Preview
+                    </button>
+                    <button class="download-sub-agent" data-agent="${agentType}">
+                        💾 Download
+                    </button>
+                </div>
             `;
+            
+            card.querySelector('.preview-sub-agent').addEventListener('click', () => {
+                this.previewSubAgent(agentType);
+            });
             
             card.querySelector('.download-sub-agent').addEventListener('click', () => {
                 this.downloadSubAgent(agentType);
@@ -552,6 +561,63 @@ class AgentGenerator {
             
             container.appendChild(card);
         });
+    }
+
+    previewSubAgent(agentType) {
+        const agentConfig = this.templates.agents[agentType];
+        if (!agentConfig) return;
+
+        const content = this.generateSubAgentConfig(agentType);
+        
+        // Create modal
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>${agentConfig.name}</h2>
+                    <button class="modal-close">×</button>
+                </div>
+                <div class="modal-body">
+                    <pre><code>${this.escapeHtml(content)}</code></pre>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-download" data-agent="${agentType}">💾 Download</button>
+                    <button class="modal-close-btn">Close</button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Add event listeners
+        modal.querySelector('.modal-close').addEventListener('click', () => {
+            document.body.removeChild(modal);
+        });
+        
+        modal.querySelector('.modal-close-btn').addEventListener('click', () => {
+            document.body.removeChild(modal);
+        });
+        
+        modal.querySelector('.modal-download').addEventListener('click', () => {
+            this.downloadSubAgent(agentType);
+        });
+        
+        // Close on background click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                document.body.removeChild(modal);
+            }
+        });
+        
+        // Close on Escape key
+        const escapeHandler = (e) => {
+            if (e.key === 'Escape') {
+                document.body.removeChild(modal);
+                document.removeEventListener('keydown', escapeHandler);
+            }
+        };
+        document.addEventListener('keydown', escapeHandler);
     }
 
     generateSubAgentConfig(agentType) {
