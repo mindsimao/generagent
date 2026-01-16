@@ -37,6 +37,12 @@ header {
     text-align: left;
 }
 
+.header-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
 header h1 {
     font-size: 2.5em;
     margin-bottom: 10px;
@@ -61,6 +67,26 @@ header p {
     transition: all 0.3s ease;
     white-space: nowrap;
     box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+}
+
+.wizard-link {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%);
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3);
+    display: inline-block;
+}
+
+.wizard-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(147, 51, 234, 0.4);
 }
 
 .help-btn:hover {

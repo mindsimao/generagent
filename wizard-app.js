@@ -898,6 +898,18 @@ function showNotification(message) {
     }, 3000);
 }
 
+function resetWizard() {
+    if (confirm('Are you sure you want to reset? All your progress will be lost.')) {
+        // Clear state
+        wizardState.currentStep = 0;
+        wizardState.formData = {};
+        wizardState.completedSteps.clear();
+        
+        // Reinitialize
+        initWizard();
+    }
+}
+
 // Event Listeners
 function setupEventListeners() {
     document.getElementById('nextBtn').addEventListener('click', nextStep);
@@ -906,6 +918,7 @@ function setupEventListeners() {
     document.getElementById('finishBtn').addEventListener('click', downloadFile);
     document.getElementById('copyPreviewBtn').addEventListener('click', copyToClipboard);
     document.getElementById('downloadPreviewBtn').addEventListener('click', downloadFile);
+    document.getElementById('resetBtn').addEventListener('click', resetWizard);
     
     // Listen for input changes to update preview and validation
     document.addEventListener('input', () => {
