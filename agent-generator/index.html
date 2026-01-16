@@ -3,19 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agent Configuration Generator</title>
+    <title>AGENTS.md Generator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🤖 Agent Configuration Generator</h1>
-            <p>Answer a few questions to generate custom agent configurations for your project</p>
+            <div class="header-content">
+                <div class="header-text">
+                    <h1>🤖 AGENTS.md Generator</h1>
+                    <p>Configure and generate custom agent files for your AI-powered development workflow</p>
+                </div>
+                <button id="help-btn" class="help-btn" title="How to use this generator">
+                    ❓ How to Use
+                </button>
+            </div>
         </header>
+
+        <!-- Help Modal -->
+        <div id="help-modal" class="modal">
+            <div class="modal-content help-modal-content">
+                <div class="modal-header">
+                    <h2>📖 How to Use This Generator</h2>
+                    <button class="close-modal" id="close-help-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="help-section">
+                        <h3>🎯 Purpose</h3>
+                        <p>Generate custom <code>AGENTS.md</code> configuration files that guide AI coding assistants (like GitHub Copilot, Cursor, or Claude) on how to work with your specific project.</p>
+                    </div>
+                    
+                    <div class="help-section">
+                        <h3>📝 How It Works</h3>
+                        <ol>
+                            <li><strong>Fill in Basic Info</strong> - Add your project name, description, and structure</li>
+                            <li><strong>Select Your Stack</strong> - Choose technologies, tools, and frameworks you use</li>
+                            <li><strong>Configure Sections</strong> - Enable/disable sections like best practices, testing, workflows</li>
+                            <li><strong>Choose Sub-Agents</strong> - Select specialized agents for documentation, testing, etc.</li>
+                            <li><strong>Preview & Download</strong> - See live preview and download your configuration</li>
+                        </ol>
+                    </div>
+
+                    <div class="help-section">
+                        <h3>💡 Tips</h3>
+                        <ul>
+                            <li><strong>Collapsible Sections:</strong> Click section headers to expand/collapse</li>
+                            <li><strong>Toggle Sections:</strong> Use checkboxes to include/exclude sections from output</li>
+                            <li><strong>Live Preview:</strong> Changes update in real-time on the right</li>
+                            <li><strong>Two Tabs:</strong> Switch between AGENTS.md and Sub-Agents views</li>
+                            <li><strong>Copy or Download:</strong> Use buttons at top of preview to export</li>
+                        </ul>
+                    </div>
+
+                    <div class="help-section">
+                        <h3>🤖 Sub-Agents</h3>
+                        <p>Specialized agent configurations for specific tasks:</p>
+                        <ul>
+                            <li><strong>Documentation Agent:</strong> Expert in writing and maintaining docs</li>
+                            <li><strong>Testing Agent:</strong> Focused on writing and debugging tests</li>
+                            <li><strong>Refactoring Agent:</strong> Specialized in code cleanup and optimization</li>
+                            <li><strong>Bug Fixing Agent:</strong> Dedicated to debugging and issue resolution</li>
+                        </ul>
+                    </div>
+
+                    <div class="help-section">
+                        <h3>📦 What You Get</h3>
+                        <ul>
+                            <li><code>AGENTS.md</code> - Main configuration file for your project</li>
+                            <li>Individual sub-agent files (optional) - Specialized configurations</li>
+                            <li>Ready to place in your project root or <code>.github/</code> folder</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="layout">
             <div class="questionnaire">
-                <h2>Project Configuration</h2>
+                <h2>Configuration Builder</h2>
                 
                 <!-- Basic Info Section -->
                 <div class="collapsible-section">

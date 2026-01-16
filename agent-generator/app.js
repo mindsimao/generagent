@@ -1449,6 +1449,29 @@ You design efficient database schemas, write optimized queries, and ensure data 
         document.getElementById('download-btn').addEventListener('click', () => {
             this.downloadAllConfigurations();
         });
+
+        // Help modal
+        document.getElementById('help-btn').addEventListener('click', () => {
+            document.getElementById('help-modal').style.display = 'flex';
+        });
+
+        document.getElementById('close-help-modal').addEventListener('click', () => {
+            document.getElementById('help-modal').style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('help-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'help-modal') {
+                document.getElementById('help-modal').style.display = 'none';
+            }
+        });
+
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.getElementById('help-modal').style.display = 'none';
+            }
+        });
     }
 
     switchPreviewTab(targetPreview) {
