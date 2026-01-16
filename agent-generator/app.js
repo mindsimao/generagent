@@ -74,7 +74,6 @@ class AgentGenerator {
 
         document.getElementById('project-structure').addEventListener('input', (e) => {
             this.state.projectStructure = e.target.value;
-            console.log('Project structure updated to:', this.state.projectStructure);
             this.updatePreview();
         });
 
@@ -342,8 +341,6 @@ class AgentGenerator {
         const stopConditions = this.state.enabledSections['workflows']
             ? (this.state.stopConditions || 'Use judgment to determine when clarification is needed')
             : '';
-
-        console.log('Project Structure Value:', projectStructure); // Debug log
 
         // Replace placeholders
         let output = template
