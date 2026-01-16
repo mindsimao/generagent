@@ -599,6 +599,24 @@ body {
     }
 }
 
+/* Reset Button */
+.btn-reset {
+    background-color: var(--color-surface-elevated);
+    color: var(--color-text);
+    border: 2px solid var(--color-border);
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-reset:hover {
+    background-color: var(--color-warning);
+    color: var(--color-bg);
+    border-color: var(--color-warning);
+    transform: translateY(-1px);
+}
+
 /* Scrollbar Styling */
 .preview-content::-webkit-scrollbar {
     width: 8px;
