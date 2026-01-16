@@ -311,10 +311,10 @@ class AgentGenerator {
             this.state.techStack.forEach(tech => {
                 const info = sections.techStack[tech] || { name: tech, description: '' };
                 const version = this.state.versions[tech] ? ` (${this.state.versions[tech]})` : '';
-                const roleDesc = this.state.descriptions[tech] ? ` - ${this.state.descriptions[tech]}` : '';
-                const baseDesc = info.description || '';
-                const fullDesc = roleDesc ? `${roleDesc}. ${baseDesc}` : baseDesc;
-                lines.push(`- **${info.name}${version}**: ${fullDesc}`);
+                const roleDesc = this.state.descriptions[tech];
+                // If user provided a description, use it; otherwise use the default
+                const finalDesc = roleDesc || info.description || '';
+                lines.push(`- **${info.name}${version}**: ${finalDesc}`);
             });
         }
 
@@ -333,10 +333,10 @@ class AgentGenerator {
             this.state.frontend.forEach(fw => {
                 const info = sections.frontend[fw] || { name: fw, description: '' };
                 const version = this.state.versions[fw] ? ` (${this.state.versions[fw]})` : '';
-                const roleDesc = this.state.descriptions[fw] ? ` - ${this.state.descriptions[fw]}` : '';
-                const baseDesc = info.description || '';
-                const fullDesc = roleDesc ? `${roleDesc}. ${baseDesc}` : baseDesc;
-                lines.push(`- **${info.name}${version}**: ${fullDesc}`);
+                const roleDesc = this.state.descriptions[fw];
+                // If user provided a description, use it; otherwise use the default
+                const finalDesc = roleDesc || info.description || '';
+                lines.push(`- **${info.name}${version}**: ${finalDesc}`);
             });
         }
 
@@ -397,10 +397,10 @@ class AgentGenerator {
         this.state.testing.forEach(test => {
             const info = sections.testing[test] || { name: test, description: '' };
             const version = this.state.versions[test] ? ` (${this.state.versions[test]})` : '';
-            const roleDesc = this.state.descriptions[test] ? ` - ${this.state.descriptions[test]}` : '';
-            const baseDesc = info.description || '';
-            const fullDesc = roleDesc ? `${roleDesc}. ${baseDesc}` : baseDesc;
-            lines.push(`- **${info.name}${version}**: ${fullDesc}`);
+            const roleDesc = this.state.descriptions[test];
+            // If user provided a description, use it; otherwise use the default
+            const finalDesc = roleDesc || info.description || '';
+            lines.push(`- **${info.name}${version}**: ${finalDesc}`);
         });
 
         // Add custom testing items
