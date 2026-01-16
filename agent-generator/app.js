@@ -1419,6 +1419,14 @@ You design efficient database schemas, write optimized queries, and ensure data 
         // Custom linter handler (no version field)
         this.setupCustomLinterHandler();
 
+        // Preview tab switching
+        document.querySelectorAll('.preview-tab').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                const targetPreview = e.currentTarget.dataset.preview;
+                this.switchPreviewTab(targetPreview);
+            });
+        });
+
         // Copy and Download buttons for AGENTS.md preview
         document.getElementById('copy-agents-btn').addEventListener('click', () => {
             this.copyAgentsMdToClipboard();
@@ -1432,6 +1440,24 @@ You design efficient database schemas, write optimized queries, and ensure data 
         document.getElementById('download-btn').addEventListener('click', () => {
             this.downloadAllConfigurations();
         });
+    }
+
+    switchPreviewTab(targetPreview) {
+        // Update tab active state
+        document.querySelectorAll('.preview-tab').forEach(tab => {
+            tab.classList.toggle('active', tab.dataset.preview === targetPreview);
+        });
+
+        // Show/hide preview content
+        document.getElementById('agents-md-preview').style.display = 
+            targetPreview === 'agents-md' ? 'block' : 'none';
+        document.getElementById('sub-agents-preview').style.display = 
+            targetPreview === 'sub-agents' ? 'grid' : 'none';
+
+        // Update copy/download buttons visibility
+        const isAgentsMd = targetPreview === 'agents-md';
+        document.getElementById('copy-agents-btn').style.display = isAgentsMd ? 'flex' : 'none';
+        document.getElementById('download-agents-btn').style.display = isAgentsMd ? 'flex' : 'none';
     }
 
     setupCollapsible() {
@@ -1935,13 +1961,29 @@ The agent should pause and seek clarification when:
 
     renderSubAgents() {
         const container = document.getElementById('sub-agents-preview');
+        const countBadge = document.getElementById('sub-agents-count');
+        const count = this.state.agents.length;
         
-        if (this.state.agents.length === 0) {
-            container.innerHTML = '';
+        // Update badge count
+        countBadge.textContent = count;
+        
+        // Update tab visibility
+        const subAgentsTab = document.getElementById('sub-agents-tab');
+        if (count === 0) {
+            subAgentsTab.style.opacity = '0.5';
+            subAgentsTab.style.pointerEvents = 'none';
+            container.innerHTML = `
+                <div class="sub-agents-empty">
+                    <p>No sub-agents selected yet.</p>
+                    <p>Select specialized agents from the form to see them here.</p>
+                </div>
+            `;
             return;
         }
-
-        container.innerHTML = '<h3 style="margin-bottom: 15px; color: #FFD700;">Suggested Sub-Agents</h3>';
+        
+        subAgentsTab.style.opacity = '1';
+        subAgentsTab.style.pointerEvents = 'auto';
+        container.innerHTML = '';
         
         this.state.agents.forEach(agentType => {
             const agentConfig = this.templates.agents[agentType];

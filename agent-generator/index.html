@@ -357,6 +357,14 @@
             <div class="preview">
                 <div class="preview-header">
                     <h2>Live Preview</h2>
+                    <div class="preview-tabs">
+                        <button class="preview-tab active" data-preview="agents-md">
+                            📄 AGENTS.md
+                        </button>
+                        <button class="preview-tab" data-preview="sub-agents" id="sub-agents-tab">
+                            🤖 Sub-Agents <span class="badge" id="sub-agents-count">0</span>
+                        </button>
+                    </div>
                     <div class="preview-actions">
                         <button id="copy-agents-btn" class="action-btn copy-btn" title="Copy to clipboard">
                             📋 Copy
@@ -366,10 +374,15 @@
                         </button>
                     </div>
                 </div>
-                <div class="preview-content">
+                <div class="preview-content" id="agents-md-preview">
                     <pre id="preview-output"><code>Fill out the questionnaire to see your configuration...</code></pre>
                 </div>
-                <div id="sub-agents-preview" class="sub-agents-preview"></div>
+                <div class="preview-content sub-agents-container" id="sub-agents-preview" style="display: none;">
+                    <div class="sub-agents-empty">
+                        <p>No sub-agents selected yet.</p>
+                        <p>Select specialized agents from the form to see them here.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
