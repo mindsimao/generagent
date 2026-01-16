@@ -1,188 +1,85 @@
-# 🤖 Agent Configuration Generator
+# Agent Generator
 
-A simple, lightweight web application that generates custom AI agent configurations for your projects. No backend, no database, no LLM calls needed - just answer a few questions and get instant, customized configuration files.
+A tool to generate AI agent configuration files (AGENTS.md) for your projects.
 
 ## Features
 
-- ✨ **Real-time Preview**: See your configuration update as you answer questions
-- 📦 **No Dependencies**: Pure HTML, CSS, and vanilla JavaScript
-- 🎨 **Beautiful UI**: Modern, responsive design with live updates
-- 📥 **Instant Download**: Download AGENTS.md and sub-agent configs
-- 🔧 **Template-Based**: Easy to customize and extend templates
-- 🚀 **No Backend Required**: Run entirely in the browser
+- Interactive questionnaire to capture project details
+- Live preview of generated configuration
+- Customizable tech stack, frameworks, and best practices
+- Sub-agent configuration suggestions
+- Dark theme with Mindera-inspired design
 
-## How It Works
+## How to Run
 
-1. **Fill out the questionnaire** with details about your project:
-   - Project name and description
-   - Tech stack (JavaScript, Python, Java, etc.)
-   - Frontend frameworks (React, Vue, etc.)
-   - Testing frameworks (Jest, Pytest, etc.)
-   - Best practices (TDD, SOLID, Security-first, etc.)
-   - Code style preferences (ESLint, Prettier, etc.)
-   - Additional specialized agents needed
-
-2. **Watch the preview update** in real-time as you make selections
-
-3. **Download configurations** for your main AGENTS.md file and any specialized sub-agents
-
-## Quick Start
-
-### Option 1: Open Locally
-
-Simply open `index.html` in your web browser:
+### Option 1: Using Python HTTP Server (Recommended)
 
 ```bash
-open index.html
-# or
-firefox index.html
-# or
-chrome index.html
-```
+# Navigate to the agent-generator directory
+cd agent-generator
 
-### Option 2: Use a Local Server
-
-If you encounter CORS issues loading templates, serve with a local server:
-
-```bash
-# Python 3
+# Start a local server (Python 3)
 python3 -m http.server 8000
 
-# Python 2
-python -m SimpleHTTPServer 8000
-
-# Node.js (with http-server)
-npx http-server -p 8000
-
-# PHP
-php -S localhost:8000
+# Open in browser
+# Visit: http://localhost:8000
 ```
 
-Then navigate to `http://localhost:8000`
+### Option 2: Using Node.js HTTP Server
 
-## Project Structure
+```bash
+# Install http-server globally (one time)
+npm install -g http-server
 
-```
-agent-generator/
-├── index.html              # Main application UI
-├── styles.css              # Styling
-├── app.js                  # Application logic
-├── README.md               # This file
-└── templates/
-    ├── agents/
-    │   ├── base-template.md       # Main AGENTS.md template
-    │   └── agent-templates.json   # Sub-agent templates
-    └── sections/
-        └── sections.json          # Content sections for different options
+# Navigate to the agent-generator directory
+cd agent-generator
+
+# Start server
+http-server -p 8000
+
+# Open in browser
+# Visit: http://localhost:8000
 ```
 
-## Customizing Templates
+### Option 3: Using VS Code Live Server
 
-### Modifying the Main Template
+1. Install "Live Server" extension in VS Code
+2. Open the `agent-generator` folder in VS Code
+3. Right-click on `index.html`
+4. Select "Open with Live Server"
 
-Edit `templates/agents/base-template.md` to customize the main AGENTS.md output. Use placeholders:
+## Why Do I Need a Server?
 
-- `{{PROJECT_NAME}}` - Project name from input
-- `{{PROJECT_DESCRIPTION}}` - Project description
-- `{{TECH_STACK}}` - Generated tech stack section
-- `{{BEST_PRACTICES}}` - Generated best practices section
-- `{{STYLE_GUIDE}}` - Generated style guide section
-- `{{TESTING}}` - Generated testing section
-- `{{CURRENT_DATE}}` - Current date
+The application loads template files (JSON, markdown) using JavaScript fetch API. 
+Modern browsers block these requests when opening HTML files directly (`file://` protocol) for security reasons (CORS policy).
 
-### Adding New Tech Stack Options
+Running a local server solves this by serving files over HTTP.
 
-Edit `templates/sections/sections.json` and add entries to the appropriate sections:
+## Usage
 
-```json
-{
-  "techStack": {
-    "your-tech": {
-      "name": "Your Technology",
-      "description": "Description of the technology"
-    }
-  }
-}
-```
+1. Fill out the questionnaire sections:
+   - Basic Information (project name, description, structure)
+   - Tech Stack (select your technologies)
+   - Testing Frameworks
+   - Best Practices
+   - Code Style & Linters
+   - Workflows & Commands
 
-Then update `index.html` to add the checkbox option.
+2. Watch the live preview update as you type
 
-### Creating New Sub-Agents
+3. Toggle sections on/off using checkboxes
 
-Add new agent configurations to `templates/agents/agent-templates.json`:
+4. Download the generated `AGENTS.md` file
 
-```json
-{
-  "your-agent": {
-    "name": "Your Agent Name",
-    "filename": "your-agent",
-    "description": "What this agent does",
-    "template": "# Your Agent Configuration\n\n{{PROJECT_NAME}}\n\n..."
-  }
-}
-```
+5. Preview and download suggested sub-agent configurations
 
-Then add a checkbox in `index.html` under "Additional Agents Needed".
+## Technologies
 
-## Use Cases
-
-Perfect for:
-
-- **Project Setup**: Generate agent configs when starting new projects
-- **Team Onboarding**: Create consistent guidelines for AI agent assistance
-- **Documentation**: Generate structured documentation for your tech stack
-- **Best Practices**: Ensure AI agents follow your team's standards
-- **Specialized Tasks**: Configure agents for specific roles (testing, security, etc.)
-
-## Generated Files
-
-### AGENTS.md
-The main configuration file that provides AI agents with:
-- Project overview and description
-- Technology stack details
-- Best practices and coding standards
-- Testing requirements
-- General instructions and workflows
-
-### Sub-Agent Configurations
-Specialized agent files based on your selections:
-- **documentation-agent.md** - Documentation writing expert
-- **refactoring-agent.md** - Code refactoring specialist
-- **testing-agent.md** - Testing and QA specialist
-- **security-agent.md** - Security auditor
-- **performance-agent.md** - Performance optimizer
-- **api-agent.md** - API development expert
-- **database-agent.md** - Database design specialist
-
-## Browser Support
-
-Works in all modern browsers:
-- Chrome 90+
-- Firefox 88+
-- Safari 14+
-- Edge 90+
-
-## Contributing
-
-Want to improve the templates or add new features?
-
-1. Templates are in `templates/` directory
-2. Modify `app.js` for new features
-3. Update `styles.css` for styling changes
-4. Test in multiple browsers
+- HTML5
+- CSS3 (with dark theme and gold accents)
+- Vanilla JavaScript (ES6+)
+- No build process required
 
 ## License
 
-MIT License - feel free to use and modify as needed!
-
-## Tips
-
-- **Start Simple**: Fill out basic info first, then add more details
-- **Iterate**: Download, review, and regenerate with adjustments
-- **Customize**: Edit downloaded files to match your exact needs
-- **Version Control**: Commit generated files to your project repo
-- **Team Alignment**: Use this to ensure team consistency with AI assistance
-
----
-
-Built with ❤️ using vanilla JavaScript - no frameworks, no build tools, just the web platform.
+MIT
