@@ -4,6 +4,10 @@ class AgentGenerator {
         this.state = {
             projectName: '',
             projectDescription: '',
+            projectStructure: '',
+            keyCommands: '',
+            workflows: '',
+            stopConditions: '',
             techStack: [],
             frontend: [],
             testing: [],
@@ -14,7 +18,8 @@ class AgentGenerator {
             descriptions: {}, // Store role descriptions for each technology
             customTech: [], // Store custom technologies
             customFrontend: [],
-            customTesting: []
+            customTesting: [],
+            customLinters: []
         };
         
         this.templates = {};
@@ -24,6 +29,7 @@ class AgentGenerator {
     async init() {
         await this.loadTemplates();
         this.attachEventListeners();
+        this.setupCollapsible();
         this.updatePreview();
     }
 
@@ -59,6 +65,26 @@ class AgentGenerator {
             this.updatePreview();
         });
 
+        document.getElementById('project-structure').addEventListener('input', (e) => {
+            this.state.projectStructure = e.target.value;
+            this.updatePreview();
+        });
+
+        document.getElementById('key-commands').addEventListener('input', (e) => {
+            this.state.keyCommands = e.target.value;
+            this.updatePreview();
+        });
+
+        document.getElementById('workflows').addEventListener('input', (e) => {
+            this.state.workflows = e.target.value;
+            this.updatePreview();
+        });
+
+        document.getElementById('stop-conditions').addEventListener('input', (e) => {
+            this.state.stopConditions = e.target.value;
+            this.updatePreview();
+        });
+
         // Checkboxes
         document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
             checkbox.addEventListener('change', () => {
@@ -89,10 +115,80 @@ class AgentGenerator {
         this.setupCustomTechHandler('tech', 'custom-tech-name', 'custom-tech-version', 'custom-tech-description', 'add-custom-tech', 'custom-tech-list', 'customTech');
         this.setupCustomTechHandler('frontend', 'custom-frontend-name', 'custom-frontend-version', 'custom-frontend-description', 'add-custom-frontend', 'custom-frontend-list', 'customFrontend');
         this.setupCustomTechHandler('testing', 'custom-testing-name', 'custom-testing-version', 'custom-testing-description', 'add-custom-testing', 'custom-testing-list', 'customTesting');
+        
+        // Custom linter handler (no version field)
+        this.setupCustomLinterHandler();
 
         // Download button
         document.getElementById('download-btn').addEventListener('click', () => {
             this.downloadAllConfigurations();
+        });
+    }
+
+    setupCollapsible() {
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const isCollapsed = content.classList.contains('collapsed');
+                
+                if (isCollapsed) {
+                    content.classList.remove('collapsed');
+                    header.classList.remove('collapsed');
+                    header.querySelector('.collapse-icon').textContent = '−';
+                } else {
+                    content.classList.add('collapsed');
+                    header.classList.add('collapsed');
+                    header.querySelector('.collapse-icon').textContent = '+';
+                }
+            });
+        });
+    }
+
+    setupCustomLinterHandler() {
+        document.getElementById('add-custom-linter').addEventListener('click', () => {
+            const nameInput = document.getElementById('custom-linter-name');
+            const descInput = document.getElementById('custom-linter-description');
+            const name = nameInput.value.trim();
+            const description = descInput.value.trim();
+
+            if (name) {
+                this.state.customLinters.push({ name, description });
+                nameInput.value = '';
+                descInput.value = '';
+                this.renderCustomLinterList();
+                this.updatePreview();
+            }
+        });
+
+        ['custom-linter-name', 'custom-linter-description'].forEach(inputId => {
+            document.getElementById(inputId).addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    document.getElementById('add-custom-linter').click();
+                }
+            });
+        });
+    }
+
+    renderCustomLinterList() {
+        const container = document.getElementById('custom-linter-list');
+        container.innerHTML = '';
+        
+        this.state.customLinters.forEach((item, index) => {
+            const tag = document.createElement('div');
+            tag.className = 'custom-tech-tag';
+            const descText = item.description ? ` - ${item.description}` : '';
+            tag.innerHTML = `
+                <span>${item.name}${descText}</span>
+                <button class="remove-btn" data-index="${index}">×</button>
+            `;
+            
+            tag.querySelector('.remove-btn').addEventListener('click', () => {
+                this.state.customLinters.splice(index, 1);
+                this.renderCustomLinterList();
+                this.updatePreview();
+            });
+            
+            container.appendChild(tag);
         });
     }
 
@@ -174,20 +270,30 @@ class AgentGenerator {
         const template = this.templates.base;
         const sections = this.templates.sections;
 
-        // Build tech stack section
+        // Build sections
         const techStackSection = this.buildTechStackSection(sections);
         const bestPracticesSection = this.buildBestPracticesSection(sections);
         const styleGuideSection = this.buildStyleGuideSection(sections);
         const testingSection = this.buildTestingSection(sections);
+        
+        // Format new sections
+        const projectStructure = this.state.projectStructure || 'Standard project structure';
+        const keyCommands = this.state.keyCommands || 'No specific commands defined';
+        const workflows = this.state.workflows || 'Follow standard development workflows';
+        const stopConditions = this.state.stopConditions || 'Use judgment to determine when clarification is needed';
 
         // Replace placeholders
         let output = template
             .replace('{{PROJECT_NAME}}', this.state.projectName || 'Your Project')
             .replace('{{PROJECT_DESCRIPTION}}', this.state.projectDescription || 'A description of your project')
+            .replace('{{PROJECT_STRUCTURE}}', projectStructure)
             .replace('{{TECH_STACK}}', techStackSection)
             .replace('{{BEST_PRACTICES}}', bestPracticesSection)
             .replace('{{STYLE_GUIDE}}', styleGuideSection)
             .replace('{{TESTING}}', testingSection)
+            .replace('{{KEY_COMMANDS}}', keyCommands)
+            .replace('{{WORKFLOWS}}', workflows)
+            .replace('{{STOP_CONDITIONS}}', stopConditions)
             .replace('{{CURRENT_DATE}}', new Date().toISOString().split('T')[0]);
 
         return output;
@@ -257,14 +363,24 @@ class AgentGenerator {
     }
 
     buildStyleGuideSection(sections) {
-        if (this.state.style.length === 0) return 'Follow standard code style conventions';
+        const lines = [];
+        
+        if (this.state.style.length > 0) {
+            this.state.style.forEach(style => {
+                const info = sections.styleGuide[style] || { name: style, description: '' };
+                lines.push(`- **${info.name}**: ${info.description}`);
+            });
+        }
 
-        const lines = this.state.style.map(style => {
-            const info = sections.styleGuide[style] || { name: style, description: '' };
-            return `- **${info.name}**: ${info.description}`;
-        });
+        // Add custom linters
+        if (this.state.customLinters.length > 0) {
+            this.state.customLinters.forEach(item => {
+                const desc = item.description ? `: ${item.description}` : '';
+                lines.push(`- **${item.name}**${desc}`);
+            });
+        }
 
-        return lines.join('\n');
+        return lines.length > 0 ? lines.join('\n') : 'Follow standard code style conventions';
     }
 
     buildTestingSection(sections) {

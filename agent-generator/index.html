@@ -33,11 +33,24 @@
                             <label for="project-description">Project Description</label>
                             <textarea id="project-description" placeholder="A brief description of what your project does..."></textarea>
                         </div>
+
+                        <div class="question-group">
+                            <label for="project-structure">Project Structure</label>
+                            <textarea id="project-structure" rows="4" placeholder="Describe your project structure (e.g., /src, /tests, /docs)"></textarea>
+                            <small class="help-text">Example: /src - Main source code, /tests - Test files, /docs - Documentation</small>
+                        </div>
                     </div>
                 </div>
 
-                <div class="question-group">
-                    <label>Primary Tech Stack</label>
+                <!-- Tech Stack Section -->
+                <div class="collapsible-section">
+                    <div class="section-header" data-section="tech-stack">
+                        <span class="section-title">💻 Tech Stack</span>
+                        <span class="collapse-icon">−</span>
+                    </div>
+                    <div class="section-content active" id="tech-stack">
+                        <div class="question-group">
+                            <label>Primary Tech Stack</label>
                     <div class="checkbox-group tech-stack-group">
                         <div class="tech-item">
                             <label><input type="checkbox" name="tech" value="javascript" /> JavaScript/Node.js</label>
@@ -152,7 +165,16 @@
                     </div>
                     <div id="custom-frontend-list" class="custom-tech-list"></div>
                 </div>
+            </div>
+        </div>
 
+        <!-- Testing Section -->
+        <div class="collapsible-section">
+            <div class="section-header" data-section="testing">
+                <span class="section-title">🧪 Testing Frameworks</span>
+                <span class="collapse-icon">−</span>
+            </div>
+            <div class="section-content active" id="testing">
                 <div class="question-group">
                     <label>Testing Frameworks</label>
                     <div class="checkbox-group">
@@ -214,7 +236,16 @@
                     </div>
                     <div id="custom-testing-list" class="custom-tech-list"></div>
                 </div>
+            </div>
+        </div>
 
+        <!-- Best Practices Section -->
+        <div class="collapsible-section">
+            <div class="section-header" data-section="best-practices">
+                <span class="section-title">✨ Best Practices & Guidelines</span>
+                <span class="collapse-icon">−</span>
+            </div>
+            <div class="section-content active" id="best-practices">
                 <div class="question-group">
                     <label>Best Practices & Guidelines</label>
                     <div class="checkbox-group">
@@ -227,7 +258,16 @@
                         <label><input type="checkbox" name="practices" value="accessibility" /> Accessibility (a11y)</label>
                     </div>
                 </div>
+            </div>
+        </div>
 
+        <!-- Code Style & Linters Section -->
+        <div class="collapsible-section">
+            <div class="section-header" data-section="code-style">
+                <span class="section-title">🎨 Code Style & Linters</span>
+                <span class="collapse-icon">−</span>
+            </div>
+            <div class="section-content active" id="code-style">
                 <div class="question-group">
                     <label>Code Style Preferences</label>
                     <div class="checkbox-group">
@@ -237,8 +277,50 @@
                         <label><input type="checkbox" name="style" value="pylint" /> Pylint</label>
                         <label><input type="checkbox" name="style" value="pep8" /> PEP 8</label>
                     </div>
+                    <div class="custom-tech-section">
+                        <input type="text" id="custom-linter-name" placeholder="Other linter/formatter (e.g., Rubocop, Checkstyle)" />
+                        <input type="text" id="custom-linter-description" placeholder="Purpose/configuration" />
+                        <button type="button" id="add-custom-linter" class="add-btn">+ Add</button>
+                    </div>
+                    <div id="custom-linter-list" class="custom-tech-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Workflows & Commands Section -->
+        <div class="collapsible-section">
+            <div class="section-header" data-section="workflows">
+                <span class="section-title">⚙️ Workflows & Commands</span>
+                <span class="collapse-icon">−</span>
+            </div>
+            <div class="section-content active" id="workflows">
+                <div class="question-group">
+                    <label for="key-commands">Key Commands</label>
+                    <textarea id="key-commands" rows="5" placeholder="List important commands for your project&#10;Example:&#10;npm run dev - Start development server&#10;npm test - Run tests&#10;npm run build - Build for production"></textarea>
+                    <small class="help-text">List the most important commands developers need to know</small>
                 </div>
 
+                <div class="question-group">
+                    <label for="workflows">Common Workflows</label>
+                    <textarea id="workflows" rows="5" placeholder="Describe common workflows&#10;Example:&#10;1. Create feature branch from main&#10;2. Make changes and commit&#10;3. Run tests locally&#10;4. Push and create PR"></textarea>
+                    <small class="help-text">Describe typical development workflows</small>
+                </div>
+
+                <div class="question-group">
+                    <label for="stop-conditions">When to Stop & Ask</label>
+                    <textarea id="stop-conditions" rows="4" placeholder="When should the agent stop and ask for feedback?&#10;Example:&#10;- When uncertain about requirements&#10;- Before making breaking changes&#10;- When multiple valid approaches exist"></textarea>
+                    <small class="help-text">Define conditions when the agent should pause and seek clarification</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Agents Section -->
+        <div class="collapsible-section">
+            <div class="section-header" data-section="agents">
+                <span class="section-title">🤖 Additional Agents</span>
+                <span class="collapse-icon">−</span>
+            </div>
+            <div class="section-content active" id="agents">
                 <div class="question-group">
                     <label>Additional Agents Needed</label>
                     <div class="checkbox-group">
@@ -251,9 +333,11 @@
                         <label><input type="checkbox" name="agents" value="database" /> Database Expert</label>
                     </div>
                 </div>
-
-                <button id="download-btn" class="download-btn">📥 Download All Configurations</button>
             </div>
+        </div>
+
+        <button id="download-btn" class="download-btn">📥 Download All Configurations</button>
+    </div>
 
             <div class="preview">
                 <div class="preview-header">

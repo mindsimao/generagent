@@ -6,6 +6,10 @@
 
 {{PROJECT_DESCRIPTION}}
 
+## Project Structure
+
+{{PROJECT_STRUCTURE}}
+
 ## Tech Stack
 
 {{TECH_STACK}}
@@ -23,6 +27,25 @@ When working on this project, adhere to the following principles:
 ## Testing Requirements
 
 {{TESTING}}
+
+## Key Commands
+
+{{KEY_COMMANDS}}
+
+## Common Workflows
+
+{{WORKFLOWS}}
+
+## When to Stop and Ask for Feedback
+
+{{STOP_CONDITIONS}}
+
+The agent should pause and seek clarification when:
+- Requirements are unclear or ambiguous
+- Multiple valid approaches exist and choice impacts architecture
+- About to make breaking changes
+- Encountering unexpected errors or edge cases
+- Unsure about business logic or domain-specific rules
 
 ## General Instructions
 

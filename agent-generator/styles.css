@@ -49,8 +49,70 @@ header p {
 }
 
 .questionnaire h2 {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     color: #333;
+}
+
+.collapsible-section {
+    margin-bottom: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: #667eea;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+}
+
+.section-header:hover {
+    background: #5568d3;
+}
+
+.section-title {
+    font-weight: 600;
+    font-size: 1.05em;
+}
+
+.collapse-icon {
+    font-size: 1.3em;
+    font-weight: bold;
+    transition: transform 0.3s;
+}
+
+.section-header.collapsed .collapse-icon {
+    transform: rotate(180deg);
+}
+
+.section-content {
+    max-height: 2000px;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s;
+    padding: 20px;
+}
+
+.section-content.collapsed {
+    max-height: 0;
+    padding: 0 20px;
+}
+
+.section-content.active {
+    max-height: none;
+}
+
+.help-text {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.85em;
+    color: #666;
+    font-style: italic;
 }
 
 .question-group {
