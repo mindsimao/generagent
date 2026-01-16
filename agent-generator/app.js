@@ -74,16 +74,7 @@ class AgentGenerator {
 
 {{WORKFLOWS}}
 
-## When to Stop and Ask for Feedback
-
 {{STOP_CONDITIONS}}
-
-The agent should pause and seek clarification when:
-- Requirements are unclear or ambiguous
-- Multiple valid approaches exist and choice impacts architecture
-- About to make breaking changes
-- Encountering unexpected errors or edge cases
-- Unsure about business logic or domain-specific rules
 
 ## General Instructions
 
@@ -454,7 +445,16 @@ When working on this project:
             ? (this.state.workflows || 'Follow standard development workflows')
             : '';
         const stopConditions = this.state.enabledSections['workflows']
-            ? (this.state.stopConditions || 'Use judgment to determine when clarification is needed')
+            ? `## When to Stop and Ask for Feedback
+
+${this.state.stopConditions || 'Use judgment to determine when clarification is needed'}
+
+The agent should pause and seek clarification when:
+- Requirements are unclear or ambiguous
+- Multiple valid approaches exist and choice impacts architecture
+- About to make breaking changes
+- Encountering unexpected errors or edge cases
+- Unsure about business logic or domain-specific rules`
             : '';
 
         // Replace placeholders
