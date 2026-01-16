@@ -106,6 +106,8 @@ When working on this project:
 5. Verify the changes work as expected
 6. Update relevant documentation
 
+{{SUB_AGENTS}}
+
 ---
 
 *This configuration was generated to help AI agents understand and work effectively with your project. Customize as needed for your specific requirements.*`;
@@ -1642,6 +1644,9 @@ The agent should pause and seek clarification when:
 - Unsure about business logic or domain-specific rules`
             : '';
 
+        // Build sub-agents section
+        const subAgentsSection = this.buildSubAgentsSection();
+
         // Replace placeholders
         let output = template
             .replace('{{PROJECT_NAME}}', this.state.projectName || 'Your Project')
@@ -1654,6 +1659,7 @@ The agent should pause and seek clarification when:
             .replace('{{KEY_COMMANDS}}', keyCommands)
             .replace('{{WORKFLOWS}}', workflows)
             .replace('{{STOP_CONDITIONS}}', stopConditions)
+            .replace('{{SUB_AGENTS}}', subAgentsSection)
             .replace('{{CURRENT_DATE}}', new Date().toISOString().split('T')[0]);
 
         // Remove empty sections from output
@@ -1830,6 +1836,92 @@ The agent should pause and seek clarification when:
         });
 
         return lines.join('\n');
+    }
+
+    buildSubAgentsSection() {
+        if (this.state.agents.length === 0) {
+            return '';
+        }
+
+        const lines = [
+            '',
+            '## Specialized Sub-Agents',
+            '',
+            'This project uses specialized sub-agents for specific tasks. Each sub-agent has deep expertise in their domain and should be consulted when working on related features.',
+            ''
+        ];
+
+        this.state.agents.forEach(agentType => {
+            const agentConfig = this.templates.agents[agentType];
+            if (!agentConfig) return;
+
+            lines.push(`### ${agentConfig.name}`);
+            lines.push('');
+            lines.push(`**Purpose:** ${agentConfig.description}`);
+            lines.push('');
+            lines.push('**When to use this agent:**');
+            
+            // Add specific use cases based on agent type
+            const useCases = this.getAgentUseCases(agentType);
+            useCases.forEach(useCase => {
+                lines.push(`- ${useCase}`);
+            });
+            
+            lines.push('');
+            lines.push(`**Configuration file:** \`.github/copilot/${agentConfig.filename}.md\``);
+            lines.push('');
+        });
+
+        return lines.join('\n');
+    }
+
+    getAgentUseCases(agentType) {
+        const useCases = {
+            documentation: [
+                'Writing or updating README files, API documentation, or user guides',
+                'Creating architecture documentation or technical specifications',
+                'Adding inline code comments for complex logic',
+                'Generating changelog entries or release notes'
+            ],
+            refactoring: [
+                'Improving code structure without changing functionality',
+                'Eliminating code duplication or technical debt',
+                'Applying design patterns or improving code organization',
+                'Simplifying complex methods or reducing cyclomatic complexity'
+            ],
+            testing: [
+                'Writing unit, integration, or end-to-end tests',
+                'Improving test coverage for existing code',
+                'Setting up testing infrastructure or frameworks',
+                'Identifying edge cases or writing tests for bug fixes'
+            ],
+            security: [
+                'Reviewing code for security vulnerabilities',
+                'Implementing authentication or authorization',
+                'Validating input sanitization and output encoding',
+                'Addressing OWASP Top 10 security concerns'
+            ],
+            performance: [
+                'Identifying and resolving performance bottlenecks',
+                'Optimizing database queries or API calls',
+                'Implementing caching strategies',
+                'Reducing bundle size or improving load times'
+            ],
+            api: [
+                'Designing or implementing REST or GraphQL APIs',
+                'Adding API versioning or deprecation handling',
+                'Implementing rate limiting or API authentication',
+                'Writing API documentation or request/response schemas'
+            ],
+            database: [
+                'Designing database schemas or migrations',
+                'Optimizing database queries or adding indexes',
+                'Implementing data validation or constraints',
+                'Setting up database backups or replication'
+            ]
+        };
+
+        return useCases[agentType] || ['Consult this agent for specialized tasks in their domain'];
     }
 
     renderSubAgents() {
