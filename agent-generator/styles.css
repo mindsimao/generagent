@@ -408,16 +408,13 @@ textarea {
 .preview-header h2 {
     color: #FFD700;
     font-size: 1.5rem;
-}
-
-.preview-header h2 {
     margin-bottom: 15px;
-    color: #333;
 }
 
 .tabs {
     display: flex;
     gap: 10px;
+}
 }
 
 .tab {
