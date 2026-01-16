@@ -699,6 +699,9 @@ textarea {
     max-height: 80vh;
     box-shadow: 0 10px 40px rgba(255, 215, 0, 0.3);
     color: #ffffff;
+}
+
+.help-dialog[open] {
     display: flex;
     flex-direction: column;
 }
